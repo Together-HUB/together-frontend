@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "accueil": "Accueil",
+    "repertoire": "Répertoire",
+    "financement": "Financement",
+    "evenements": "Événements",
+    "sujets": "Sujets",
+    "succes": "Succès"
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "register_ong": "ONG / Organisation locale",
+    "register_partner": "Partenaire / Donateur"
+  },
+  "whatsapp_tooltip": "Nous contacter sur WhatsApp",
+  "email_tooltip": "Nous envoyer un email",
+  "footer": {
+    "brand_tagline": "Connecter les acteurs humanitaires locaux pour un impact durable en RDC",
+    "platform_heading": "PLATEFORME",
+    "join_heading": "REJOINDRE",
+    "contact_heading": "CONTACT",
+    "links": {
+      "repertoire": "Répertoire ONG",
+      "financement": "Financement",
+      "evenements": "Événements",
+      "bibliotheque": "Bibliothèque",
+      "dashboard": "Tableau de bord",
+      "register_ong": "S'inscrire comme ONG",
+      "register_partner": "S'inscrire comme Partenaire",
+      "login": "Se connecter",
+      "about": "À propos"
+    },
+    "contact": {
+      "email": "adssebia2025@gmail.com",
+      "whatsapp": "+243 813 183 123",
+      "location": "Bunia, Ituri — RD Congo",
+      "platform": "drctogethernetwork.org"
+    },
+    "copyright": "© 2026 ToGETHER HUB. Tous droits réservés."
+  }
+}

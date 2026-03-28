@@ -1,0 +1,102 @@
+{
+  "hero": {
+    "badge": "Plateforme Humanitaire • RD Congo",
+    "headline": "Connecter les acteurs humanitaires locaux",
+    "subheadline": "ToGETHER HUB rassemble les ONG locales, les partenaires et les donateurs pour maximiser l'impact humanitaire en République Démocratique du Congo.",
+    "cta_join": "Rejoindre le réseau",
+    "cta_explore": "Explorer la plateforme",
+    "trust": "247 ONG actives · 26 provinces · Accès gratuit",
+    "dashboard": {
+      "title": "Tableau de bord",
+      "online": "En ligne",
+      "stat1": "247 ONG Vérifiées",
+      "stat2": "1,200+ Projets financés",
+      "stat3": "2M+ Personnes aidées",
+      "opportunities": "Dernières opportunités",
+      "opp1_title": "Fonds ECHO — Urgence Ituri",
+      "opp1_deadline": "Clôture : 15 Avr 2026",
+      "opp2_title": "AFD — Développement Local",
+      "opp2_deadline": "Clôture : 30 Avr 2026",
+      "see_all": "Voir toutes les opportunités →"
+    }
+  },
+  "stats": {
+    "ong": "ONG ACTIVES",
+    "projects": "PROJETS FINANCÉS",
+    "people": "PERSONNES AIDÉES",
+    "provinces": "PROVINCES COUVERTES"
+  },
+  "modules": {
+    "label": "LA PLATEFORME",
+    "title": "Tous les outils dont vous avez besoin",
+    "subtitle": "Six modules intégrés pour renforcer la coordination humanitaire locale en RDC",
+    "card1_title": "Répertoire des ONG",
+    "card1_desc": "Annuaire consultable de toutes les organisations humanitaires locales vérifiées en RDC",
+    "card1_link": "Explorer →",
+    "card2_title": "Opportunités de Financement",
+    "card2_desc": "Appels à projets, subventions et opportunités de partenariat centralisés en un seul endroit",
+    "card2_link": "Découvrir →",
+    "card3_title": "Calendrier & Événements",
+    "card3_desc": "Formations, réunions de cluster et forums de coordination provinciaux",
+    "card3_link": "Voir le calendrier →",
+    "card4_title": "Bibliothèque de Ressources",
+    "card4_desc": "Notes de plaidoyer, rapports d'impact et documents techniques partagés",
+    "card4_link": "Accéder →",
+    "card5_title": "Messagerie & Forums",
+    "card5_desc": "Communication en temps réel entre ONG par groupe thématique et par province",
+    "card5_link": "Rejoindre →",
+    "card6_title": "Tableau de Bord & Suivi",
+    "card6_desc": "Indicateurs de réseau en temps réel alignés sur le cadre M&E du programme ToGETHER",
+    "card6_link": "Voir les métriques →"
+  },
+  "how_it_works": {
+    "label": "COMMENT ÇA MARCHE",
+    "title": "Simple, rapide et efficace",
+    "step1_title": "Inscrivez votre organisation",
+    "step1_desc": "Créez votre profil en quelques minutes et rejoignez le réseau humanitaire local",
+    "step2_title": "Connectez-vous et collaborez",
+    "step2_desc": "Accédez aux opportunités de financement, aux événements et aux autres ONG de votre région",
+    "step3_title": "Mesurez votre impact",
+    "step3_desc": "Suivez vos projets, partagez vos succès et renforcez votre visibilité"
+  },
+  "audience": {
+    "ong_title": "Pour les ONG locales",
+    "ong_benefit1": "Accès aux opportunités de financement",
+    "ong_benefit2": "Visibilité auprès des donateurs internationaux",
+    "ong_benefit3": "Réseau de collaboration interprovincial",
+    "ong_benefit4": "Outils de plaidoyer et bibliothèque de ressources",
+    "ong_benefit5": "Tableau de bord de suivi d'impact",
+    "ong_cta": "S'inscrire comme ONG →",
+    "partner_title": "Pour les Partenaires & Donateurs",
+    "partner_benefit1": "Accès à 247 ONG vérifiées et géolocalisées",
+    "partner_benefit2": "Publication d'appels à projets ciblés",
+    "partner_benefit3": "Rapports d'impact transparents",
+    "partner_benefit4": "Co-animation de forums thématiques",
+    "partner_benefit5": "Tableau de bord partenaire dédié",
+    "partner_cta": "S'inscrire comme Partenaire →"
+  },
+  "stories": {
+    "label": "HISTOIRES DE SUCCÈS",
+    "title": "Des résultats concrets sur le terrain",
+    "badge1": "Santé",
+    "quote1": "Grâce à ToGETHER HUB, nous avons obtenu un financement de 150,000€ en seulement 3 mois",
+    "org1": "ADSSE Bunia — Ituri",
+    "metric1": "2M+ personnes aidées",
+    "badge2": "Éducation",
+    "quote2": "15 nouveaux partenariats établis grâce au réseau interprovincial de la plateforme",
+    "org2": "Réseau Éducation Sans Frontières — Nord Kivu",
+    "metric2": "50,000+ élèves formés",
+    "badge3": "Urgence",
+    "quote3": "La coordination via la plateforme nous a permis d'intervenir dans 8 provinces simultanément",
+    "org3": "Action d'Urgence Congo — Kinshasa",
+    "metric3": "500,000+ personnes secourues",
+    "see_all": "Voir toutes les histoires →"
+  },
+  "cta": {
+    "title": "Prêt à rejoindre le réseau humanitaire ?",
+    "subtitle": "Rejoignez 247 organisations qui collaborent déjà sur ToGETHER HUB. Inscription gratuite.",
+    "btn1": "S'inscrire comme ONG",
+    "btn2": "S'inscrire comme Partenaire",
+    "trust": "Gratuit · Vérifié · Sécurisé · Bilingue FR/EN"
+  }
+}
