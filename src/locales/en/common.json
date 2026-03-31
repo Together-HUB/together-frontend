@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "accueil": "Home",
+    "repertoire": "Directory",
+    "financement": "Funding",
+    "evenements": "Events",
+    "sujets": "Topics",
+    "succes": "Stories"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Register",
+    "register_ong": "NGO / Local Organisation",
+    "register_partner": "Partner / Donor"
+  },
+  "whatsapp_tooltip": "Contact us on WhatsApp",
+  "email_tooltip": "Send us an email",
+  "footer": {
+    "brand_tagline": "Connecting local humanitarian actors for lasting impact in DRC",
+    "platform_heading": "PLATFORM",
+    "join_heading": "JOIN",
+    "contact_heading": "CONTACT",
+    "links": {
+      "repertoire": "NGO Directory",
+      "financement": "Funding",
+      "evenements": "Events",
+      "bibliotheque": "Library",
+      "dashboard": "Dashboard",
+      "register_ong": "Register as an NGO",
+      "register_partner": "Register as a Partner",
+      "login": "Log in",
+      "about": "About"
+    },
+    "contact": {
+      "email": "adssebia2025@gmail.com",
+      "whatsapp": "+243 813 183 123",
+      "location": "Avenue Shari No. 35, Quartier Lumumba, Commune de Mbunya, Bunia — DR Congo",
+      "platform": "drctogethernetwork.org"
+    },
+    "copyright": "© 2026 ToGETHER Networking. All rights reserved."
+  }
+}

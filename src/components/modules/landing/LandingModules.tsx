@@ -106,7 +106,7 @@ export default function LandingModules() {
               initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="bg-white rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-transparent hover:border-primary/20 cursor-pointer group"
+              className="bg-white rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20 transition-all duration-200 ease-in-out cursor-pointer group"
             >
               <div
                 className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${card.iconBg} mb-5`}
@@ -120,7 +120,7 @@ export default function LandingModules() {
                 {t(`modules.${card.descKey}`)}
               </p>
               <span
-                className={`text-sm font-semibold ${card.linkColor} group-hover:underline`}
+                className={`text-sm font-semibold ${card.linkColor} opacity-80 group-hover:opacity-100 group-hover:underline`}
               >
                 {t(`modules.${card.linkKey}`)}
               </span>

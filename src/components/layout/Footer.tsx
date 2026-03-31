@@ -13,10 +13,10 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <a href="#" className="flex items-center gap-2.5 w-fit">
               <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">TH</span>
+                <span className="text-white font-bold text-sm leading-none">TN</span>
               </div>
               <span className="font-bold text-white text-lg leading-none">
-                ToGETHER <span className="text-primary">HUB</span>
+                ToGETHER <span className="text-primary">Networking</span>
               </span>
             </a>
             <p className="text-gray text-sm leading-relaxed max-w-xs">

@@ -19,7 +19,7 @@ export default function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -37,8 +37,8 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 inset-x-0 z-50 bg-white transition-shadow duration-300 ${
-          scrolled ? "shadow-md" : "shadow-none"
+        className={`fixed top-0 inset-x-0 z-50 bg-white transition-all duration-200 ${
+          scrolled ? "shadow-md border-b border-gray-100" : "border-b border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,10 +46,10 @@ export default function Navbar() {
             {/* Logo */}
             <a href="#" className="flex items-center gap-2.5 flex-shrink-0">
               <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">TH</span>
+                <span className="text-white font-bold text-sm leading-none">TN</span>
               </div>
               <span className="font-bold text-black text-lg leading-none">
-                ToGETHER <span className="text-primary">HUB</span>
+                ToGETHER <span className="text-primary">Networking</span>
               </span>
             </a>
 
@@ -98,11 +98,6 @@ export default function Navbar() {
                   EN
                 </button>
               </div>
-
-              {/* Se connecter */}
-              <button className="px-4 py-2 text-sm font-medium text-primary border border-primary rounded-lg hover:bg-primary-light transition-colors">
-                {t("auth.login")}
-              </button>
 
               {/* S'inscrire dropdown */}
               <div className="relative" ref={dropdownRef}>
@@ -154,10 +149,10 @@ export default function Navbar() {
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">TH</span>
+                  <span className="text-white font-bold text-xs">TN</span>
                 </div>
                 <span className="font-bold text-black">
-                  ToGETHER <span className="text-primary">HUB</span>
+                  ToGETHER <span className="text-primary">Networking</span>
                 </span>
               </div>
               <button
@@ -207,9 +202,6 @@ export default function Navbar() {
                 </button>
                 <button className="w-full py-3 rounded-xl border-2 border-primary text-primary font-semibold text-sm hover:bg-primary-light transition-colors">
                   {t("auth.register_partner")}
-                </button>
-                <button className="w-full py-3 rounded-xl text-gray font-medium text-sm hover:text-primary transition-colors">
-                  {t("auth.login")}
                 </button>
               </div>
             </div>

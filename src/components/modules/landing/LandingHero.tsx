@@ -14,7 +14,7 @@ export default function LandingHero() {
       <div className="absolute top-0 left-0 w-[700px] h-[700px] rounded-full bg-primary/25 blur-3xl -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-primary-dark/20 blur-3xl translate-x-1/4 translate-y-1/4 pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         {/* Left — Text */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}

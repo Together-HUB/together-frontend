@@ -70,13 +70,13 @@ export default function LandingStories() {
 
               <Quote size={18} className="text-gray opacity-40" />
 
-              <p className="text-black text-sm leading-relaxed italic flex-1">
+              <p className="text-gray-700 leading-relaxed flex-1">
                 {story.quote}
               </p>
 
-              <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                <span className="text-gray text-xs font-medium">{story.org}</span>
-                <span className={`text-xs font-bold ${story.metricColor}`}>
+              <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-4">
+                <span className="font-semibold text-gray-900 text-sm">{story.org}</span>
+                <span className={`text-sm font-bold ${story.metricColor}`}>
                   {story.metric}
                 </span>
               </div>

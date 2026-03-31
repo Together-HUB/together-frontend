@@ -11,24 +11,24 @@ export default function LandingHowItWorks() {
   const steps = [
     {
       num: "01",
-      icon: <UserPlus size={22} className="text-primary" />,
+      icon: <UserPlus size={24} className="text-primary" />,
       title: t("how_it_works.step1_title"),
       desc: t("how_it_works.step1_desc"),
-      active: false,
+      isMiddle: false,
     },
     {
       num: "02",
-      icon: <Search size={22} className="text-white" />,
+      icon: <Search size={24} className="text-primary" />,
       title: t("how_it_works.step2_title"),
       desc: t("how_it_works.step2_desc"),
-      active: true,
+      isMiddle: true,
     },
     {
       num: "03",
-      icon: <TrendingUp size={22} className="text-primary" />,
+      icon: <TrendingUp size={24} className="text-primary" />,
       title: t("how_it_works.step3_title"),
       desc: t("how_it_works.step3_desc"),
-      active: false,
+      isMiddle: false,
     },
   ];
 
@@ -46,7 +46,7 @@ export default function LandingHowItWorks() {
         {/* Steps */}
         <div className="relative flex flex-col lg:flex-row items-start justify-center gap-10 lg:gap-0">
           {/* Dashed connector line on desktop */}
-          <div className="hidden lg:block absolute top-[4.5rem] left-[18%] right-[18%] h-0 border-t-2 border-dashed border-primary/25 z-0" />
+          <div className="hidden lg:block absolute top-[4.5rem] left-[18%] right-[18%] h-0 border-t-2 border-dashed border-primary/30 z-0" />
 
           {steps.map((step, i) => (
             <motion.div
@@ -63,10 +63,8 @@ export default function LandingHowItWorks() {
 
               {/* Step circle */}
               <div
-                className={`w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold mb-6 transition-transform ${
-                  step.active
-                    ? "bg-primary text-white shadow-lg shadow-primary/30 scale-110"
-                    : "bg-white border-2 border-primary text-primary"
+                className={`rounded-full flex items-center justify-center text-lg font-bold mb-6 border-2 border-primary text-primary bg-white ${
+                  step.isMiddle ? "w-14 h-14" : "w-12 h-12"
                 }`}
               >
                 {step.num}

@@ -2,7 +2,7 @@
   "hero": {
     "badge": "Plateforme Humanitaire • RD Congo",
     "headline": "Connecter les acteurs humanitaires locaux",
-    "subheadline": "ToGETHER HUB rassemble les ONG locales, les partenaires et les donateurs pour maximiser l'impact humanitaire en République Démocratique du Congo.",
+    "subheadline": "ToGETHER Networking rassemble les ONG locales, les partenaires et les donateurs pour maximiser l'impact humanitaire en République Démocratique du Congo.",
     "cta_join": "Rejoindre le réseau",
     "cta_explore": "Explorer la plateforme",
     "trust": "247 ONG actives · 26 provinces · Accès gratuit",
@@ -24,7 +24,8 @@
     "ong": "ONG ACTIVES",
     "projects": "PROJETS FINANCÉS",
     "people": "PERSONNES AIDÉES",
-    "provinces": "PROVINCES COUVERTES"
+    "provinces": "PROVINCES COUVERTES",
+    "provinces_label": "Provinces couvertes"
   },
   "modules": {
     "label": "LA PLATEFORME",
@@ -46,7 +47,7 @@
     "card5_desc": "Communication en temps réel entre ONG par groupe thématique et par province",
     "card5_link": "Rejoindre →",
     "card6_title": "Tableau de Bord & Suivi",
-    "card6_desc": "Indicateurs de réseau en temps réel alignés sur le cadre M&E du programme ToGETHER",
+    "card6_desc": "Indicateurs de réseau en temps réel alignés sur le cadre M&E du programme ToGETHER Networking",
     "card6_link": "Voir les métriques →"
   },
   "how_it_works": {
@@ -79,7 +80,7 @@
     "label": "HISTOIRES DE SUCCÈS",
     "title": "Des résultats concrets sur le terrain",
     "badge1": "Santé",
-    "quote1": "Grâce à ToGETHER HUB, nous avons obtenu un financement de 150,000€ en seulement 3 mois",
+    "quote1": "Grâce à ToGETHER Networking, nous avons obtenu un financement de 150,000€ en seulement 3 mois",
     "org1": "ADSSE Bunia — Ituri",
     "metric1": "2M+ personnes aidées",
     "badge2": "Éducation",
@@ -94,9 +95,18 @@
   },
   "cta": {
     "title": "Prêt à rejoindre le réseau humanitaire ?",
-    "subtitle": "Rejoignez 247 organisations qui collaborent déjà sur ToGETHER HUB. Inscription gratuite.",
+    "subtitle": "Rejoignez 247 organisations qui collaborent déjà sur ToGETHER Networking. Inscription gratuite.",
     "btn1": "S'inscrire comme ONG",
     "btn2": "S'inscrire comme Partenaire",
     "trust": "Gratuit · Vérifié · Sécurisé · Bilingue FR/EN"
+  },
+  "partners": {
+    "label": "ILS NOUS FONT CONFIANCE",
+    "partner1": "ECHO / DG ECHO",
+    "partner2": "AFD",
+    "partner3": "UNICEF RDC",
+    "partner4": "DKH",
+    "partner5": "OCHA RDC",
+    "partner6": "USAID"
   }
 }

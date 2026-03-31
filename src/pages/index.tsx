@@ -9,6 +9,7 @@ import LandingModules from "@/components/modules/landing/LandingModules";
 import LandingHowItWorks from "@/components/modules/landing/LandingHowItWorks";
 import LandingAudience from "@/components/modules/landing/LandingAudience";
 import LandingStories from "@/components/modules/landing/LandingStories";
+import LandingPartners from "@/components/modules/landing/LandingPartners";
 import LandingCTA from "@/components/modules/landing/LandingCTA";
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
         <LandingHowItWorks />
         <LandingAudience />
         <LandingStories />
+        <LandingPartners />
         <LandingCTA />
       </main>
       <Footer />
