@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
+import Link from "next/link";
 import { Mail, MessageCircle, ChevronDown, X, Menu } from "lucide-react";
 
 const NAV_LINKS = [
-  { key: "accueil", href: "#" },
+  { key: "accueil", href: "/" },
   { key: "repertoire", href: "#repertoire" },
   { key: "financement", href: "#financement" },
   { key: "evenements", href: "#evenements" },
@@ -43,15 +44,16 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
+
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2.5 flex-shrink-0">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">TN</span>
+            <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
+              <div className="w-9 h-9 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/20 group-hover:shadow-md transition-shadow">
+                <span className="text-white font-bold text-sm tracking-tight leading-none">TN</span>
               </div>
-              <span className="font-bold text-black text-lg leading-none">
+              <span className="font-bold text-black text-lg leading-none tracking-tight">
                 ToGETHER <span className="text-primary">Networking</span>
               </span>
-            </a>
+            </Link>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-6">
@@ -113,13 +115,21 @@ export default function Navbar() {
                 </button>
                 {registerOpen && (
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50">
-                    <button className="w-full px-4 py-3 text-sm text-left text-black hover:bg-primary-light hover:text-primary transition-colors">
+                    <Link
+                      href="/register/ngo"
+                      onClick={() => setRegisterOpen(false)}
+                      className="block w-full px-4 py-3 text-sm text-left text-black hover:bg-primary-light hover:text-primary transition-colors"
+                    >
                       {t("auth.register_ong")}
-                    </button>
+                    </Link>
                     <div className="h-px bg-gray-100" />
-                    <button className="w-full px-4 py-3 text-sm text-left text-black hover:bg-primary-light hover:text-primary transition-colors">
+                    <Link
+                      href="/register/partner"
+                      onClick={() => setRegisterOpen(false)}
+                      className="block w-full px-4 py-3 text-sm text-left text-black hover:bg-primary-light hover:text-primary transition-colors"
+                    >
                       {t("auth.register_partner")}
-                    </button>
+                    </Link>
                   </div>
                 )}
               </div>
@@ -147,14 +157,18 @@ export default function Navbar() {
           <div className="fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white z-50 shadow-2xl flex flex-col lg:hidden">
             {/* Drawer Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">TN</span>
+              <Link
+                href="/"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 group"
+              >
+                <div className="w-8 h-8 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/20">
+                  <span className="text-white font-bold text-xs tracking-tight">TN</span>
                 </div>
-                <span className="font-bold text-black">
+                <span className="font-bold text-black tracking-tight">
                   ToGETHER <span className="text-primary">Networking</span>
                 </span>
-              </div>
+              </Link>
               <button
                 onClick={() => setMobileOpen(false)}
                 className="p-2 text-gray hover:text-black transition-colors"
@@ -197,12 +211,20 @@ export default function Navbar() {
               </div>
 
               <div className="flex flex-col gap-3 mt-4">
-                <button className="w-full py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary-dark transition-colors">
+                <Link
+                  href="/register/ngo"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary-dark transition-colors text-center"
+                >
                   {t("auth.register_ong")}
-                </button>
-                <button className="w-full py-3 rounded-xl border-2 border-primary text-primary font-semibold text-sm hover:bg-primary-light transition-colors">
+                </Link>
+                <Link
+                  href="/register/partner"
+                  onClick={() => setMobileOpen(false)}
+                  className="w-full py-3 rounded-xl border-2 border-primary text-primary font-semibold text-sm hover:bg-primary-light transition-colors text-center"
+                >
                   {t("auth.register_partner")}
-                </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 
 export default function LandingCTA() {
   const { t } = useTranslation("landing");
@@ -23,12 +24,12 @@ export default function LandingCTA() {
             {t("cta.subtitle")}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <button className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary-light transition-colors shadow-lg">
+            <Link href="/register/ngo" className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary-light transition-colors shadow-lg">
               {t("cta.btn1")}
-            </button>
-            <button className="px-8 py-3.5 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-primary transition-colors">
+            </Link>
+            <Link href="/register/partner" className="px-8 py-3.5 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-primary transition-colors">
               {t("cta.btn2")}
-            </button>
+            </Link>
           </div>
           <p className="text-primary-light/70 text-sm">{t("cta.trust")}</p>
         </motion.div>

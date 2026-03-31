@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { Building2, CheckCircle, Users } from "lucide-react";
 
 export default function LandingAudience() {
@@ -49,9 +50,9 @@ export default function LandingAudience() {
                 </li>
               ))}
             </ul>
-            <button className="w-full py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors mt-2">
+            <Link href="/register/ngo" className="w-full py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors mt-2 text-center block">
               {t("audience.ong_cta")}
-            </button>
+            </Link>
           </motion.div>
 
           {/* Partner Card */}
@@ -75,9 +76,9 @@ export default function LandingAudience() {
                 </li>
               ))}
             </ul>
-            <button className="w-full py-3.5 bg-white text-primary font-semibold rounded-xl hover:bg-primary-light transition-colors mt-2">
+            <Link href="/register/partner" className="w-full py-3.5 bg-white text-primary font-semibold rounded-xl hover:bg-primary-light transition-colors mt-2 text-center block">
               {t("audience.partner_cta")}
-            </button>
+            </Link>
           </motion.div>
         </div>
       </div>

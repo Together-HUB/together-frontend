@@ -1,4 +1,5 @@
 import { useTranslation } from "next-i18next/pages";
+import Link from "next/link";
 import { Mail, MessageCircle, MapPin, Globe } from "lucide-react";
 
 export default function Footer() {
@@ -9,16 +10,17 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-4">
-            <a href="#" className="flex items-center gap-2.5 w-fit">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">TN</span>
+            <Link href="/" className="flex items-center gap-2.5 w-fit group">
+              <div className="w-9 h-9 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/30 group-hover:shadow-md transition-shadow">
+                <span className="text-white font-bold text-sm tracking-tight leading-none">TN</span>
               </div>
-              <span className="font-bold text-white text-lg leading-none">
+              <span className="font-bold text-white text-lg tracking-tight leading-none">
                 ToGETHER <span className="text-primary">Networking</span>
               </span>
-            </a>
+            </Link>
             <p className="text-gray text-sm leading-relaxed max-w-xs">
               {t("footer.brand_tagline")}
             </p>
@@ -64,13 +66,21 @@ export default function Footer() {
               {t("footer.join_heading")}
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {(["register_ong", "register_partner", "login", "about"] as const).map((key) => (
-                <li key={key}>
-                  <a href="#" className="text-gray text-sm hover:text-white transition-colors">
-                    {t(`footer.links.${key}`)}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link href="/register/ngo" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.register_ong")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/register/partner" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.register_partner")}
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.about")}
+                </a>
+              </li>
             </ul>
           </div>
 

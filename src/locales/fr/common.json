@@ -8,7 +8,6 @@
     "succes": "Succès"
   },
   "auth": {
-    "login": "Se connecter",
     "register": "S'inscrire",
     "register_ong": "ONG / Organisation locale",
     "register_partner": "Partenaire / Donateur"
@@ -28,7 +27,6 @@
       "dashboard": "Tableau de bord",
       "register_ong": "S'inscrire comme ONG",
       "register_partner": "S'inscrire comme Partenaire",
-      "login": "Se connecter",
       "about": "À propos"
     },
     "contact": {
