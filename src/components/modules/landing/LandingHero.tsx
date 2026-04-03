@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next/pages";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Shield, DollarSign, Users } from "lucide-react";
+import { Shield, Users } from "lucide-react";
 
 export default function LandingHero() {
   const { t } = useTranslation("landing");
@@ -81,12 +81,6 @@ export default function LandingHero() {
               <Shield size={18} className="text-primary flex-shrink-0" />
               <span className="text-white text-sm font-medium">
                 {t("hero.dashboard.stat1")}
-              </span>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
-              <DollarSign size={18} className="text-accent flex-shrink-0" />
-              <span className="text-white text-sm font-medium">
-                {t("hero.dashboard.stat2")}
               </span>
             </div>
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">

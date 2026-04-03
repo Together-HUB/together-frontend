@@ -1,5 +1,6 @@
 import { useTranslation } from "next-i18next/pages";
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, MessageCircle, MapPin, Globe } from "lucide-react";
 
 export default function Footer() {
@@ -13,13 +14,16 @@ export default function Footer() {
 
           {/* Col 1 — Brand */}
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2.5 w-fit group">
-              <div className="w-9 h-9 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/30 group-hover:shadow-md transition-shadow">
-                <span className="text-white font-bold text-sm tracking-tight leading-none">TN</span>
+            <Link href="/" className="w-fit">
+              <div className="bg-white rounded-xl px-3 py-2 inline-flex">
+                <Image
+                  src="/together.png"
+                  alt="ToGETHER Networking"
+                  width={140}
+                  height={40}
+                  className="object-contain h-9 w-auto"
+                />
               </div>
-              <span className="font-bold text-white text-lg tracking-tight leading-none">
-                ToGETHER <span className="text-primary">Networking</span>
-              </span>
             </Link>
             <p className="text-gray text-sm leading-relaxed max-w-xs">
               {t("footer.brand_tagline")}
@@ -35,7 +39,7 @@ export default function Footer() {
                 <MessageCircle size={16} />
               </a>
               <a
-                href="mailto:adssebia2025@gmail.com"
+                href="mailto:contact@drctogethernetwork.org"
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-gray hover:text-white transition-colors"
                 aria-label="Email"
               >
@@ -93,7 +97,7 @@ export default function Footer() {
               <li className="flex items-start gap-2.5">
                 <Mail size={14} className="text-gray mt-0.5 flex-shrink-0" />
                 <a
-                  href="mailto:adssebia2025@gmail.com"
+                  href="mailto:contact@drctogethernetwork.org"
                   className="text-gray text-sm hover:text-white transition-colors break-all"
                 >
                   {t("footer.contact.email")}
@@ -112,7 +116,11 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-gray mt-0.5 flex-shrink-0" />
-                <span className="text-gray text-sm">{t("footer.contact.location")}</span>
+                <span className="text-gray text-sm">{t("footer.contact.location_kinshasa")}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin size={14} className="text-gray mt-0.5 flex-shrink-0" />
+                <span className="text-gray text-sm">{t("footer.contact.location_bunia")}</span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Globe size={14} className="text-gray mt-0.5 flex-shrink-0" />

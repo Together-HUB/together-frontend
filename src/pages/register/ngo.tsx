@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Head from "next/head";
 import {
   Building2, FileText, User, CheckCircle, MessageCircle,
   Mail, Quote, Loader2, Check,
@@ -23,13 +24,13 @@ const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: CURRENT_YEAR - 1959 }, (_, i) => CURRENT_YEAR - i);
 
 const SECTORS = [
-  { key: "sante", emoji: "🏥" },
-  { key: "education", emoji: "📚" },
-  { key: "wash", emoji: "🌊" },
-  { key: "protection", emoji: "🛡️" },
-  { key: "agriculture", emoji: "🌾" },
-  { key: "urgence", emoji: "🚨" },
-  { key: "autre", emoji: "⚙️" },
+  { key: "sante" },
+  { key: "education" },
+  { key: "wash" },
+  { key: "protection" },
+  { key: "agriculture" },
+  { key: "urgence" },
+  { key: "autre" },
 ] as const;
 
 const TEAM_SIZES = ["team_lt10", "team_10_25", "team_26_50", "team_51_100", "team_gt100"] as const;
@@ -214,7 +215,7 @@ function BenefitsPanel() {
             {t("common.whatsapp_contact")}
           </a>
           <a
-            href="mailto:adssebia2025@gmail.com"
+            href="mailto:contact@drctogethernetwork.org"
             className="flex items-center gap-2 text-sm text-primary hover:text-primary-dark"
           >
             <Mail size={15} />
@@ -343,6 +344,10 @@ export default function RegisterNGO() {
 
   return (
     <>
+      <Head>
+        <title>S&apos;inscrire comme ONG — ToGETHER Networking</title>
+        <meta name="description" content="ToGETHER Networking RDCongo connecte les acteurs humanitaires locaux pour renforcer la collaboration et le leadership local en République Démocratique du Congo." />
+      </Head>
       <Navbar />
       <main className="min-h-screen bg-gray-50">
         {/* Page Header */}
@@ -478,7 +483,6 @@ export default function RegisterNGO() {
                                     active ? "border-primary bg-primary-light" : "border-gray-200 hover:border-primary/40"
                                   }`}
                                 >
-                                  <span className="text-xl flex-shrink-0">{s.emoji}</span>
                                   <div>
                                     <p className={`text-sm font-semibold ${active ? "text-primary" : "text-gray-800"}`}>
                                       {t(`ngo.step2.sector_${s.key}`)}
@@ -599,7 +603,7 @@ export default function RegisterNGO() {
                               <input
                                 type="checkbox"
                                 {...register("acceptTerms")}
-                                className="w-4 h-4 mt-0.5 accent-[#562BD6] cursor-pointer flex-shrink-0"
+                                className="w-4 h-4 mt-0.5 accent-[#006e8c] cursor-pointer flex-shrink-0"
                               />
                               <span className="text-sm text-gray-700">
                                 {t("ngo.step3.terms")}{" "}
@@ -623,7 +627,7 @@ export default function RegisterNGO() {
                               <input
                                 type="checkbox"
                                 {...register("acceptData")}
-                                className="w-4 h-4 mt-0.5 accent-[#562BD6] cursor-pointer flex-shrink-0"
+                                className="w-4 h-4 mt-0.5 accent-[#006e8c] cursor-pointer flex-shrink-0"
                               />
                               <span className="text-sm text-gray-700">{t("ngo.step3.data_consent")}</span>
                             </label>

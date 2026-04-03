@@ -34,23 +34,23 @@ export default function LandingAudience() {
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl p-8 flex flex-col gap-6 shadow-sm"
+            className="bg-gradient-to-r from-primary to-primary-dark rounded-2xl p-8 flex flex-col gap-6 shadow-sm"
           >
             <div className="inline-flex">
-              <div className="flex items-center gap-2 px-3 py-2 bg-primary-light rounded-xl w-fit">
-                <Building2 size={20} className="text-primary" />
+              <div className="flex items-center gap-2 px-3 py-2 bg-white/20 rounded-xl w-fit">
+                <Building2 size={20} className="text-white" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold text-black">{t("audience.ong_title")}</h3>
+            <h3 className="text-2xl font-bold text-white">{t("audience.ong_title")}</h3>
             <ul className="flex flex-col gap-3 flex-1">
               {ongBenefits.map((benefit, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle size={18} className="text-primary mt-0.5 flex-shrink-0" />
-                  <span className="text-gray text-sm leading-relaxed">{benefit}</span>
+                  <CheckCircle size={18} className="text-white mt-0.5 flex-shrink-0" />
+                  <span className="text-white/80 text-sm leading-relaxed">{benefit}</span>
                 </li>
               ))}
             </ul>
-            <Link href="/register/ngo" className="w-full py-3.5 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors mt-2 text-center block">
+            <Link href="/register/ngo" className="w-full py-3.5 bg-white text-primary font-semibold rounded-xl hover:bg-primary-light transition-colors mt-2 text-center block">
               {t("audience.ong_cta")}
             </Link>
           </motion.div>
@@ -60,7 +60,8 @@ export default function LandingAudience() {
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-8 flex flex-col gap-6 shadow-sm"
+            className="rounded-2xl p-8 flex flex-col gap-6 shadow-sm"
+            style={{ background: "linear-gradient(to right, #A60F30, #7A0A23)" }}
           >
             <div className="inline-flex">
               <div className="flex items-center gap-2 px-3 py-2 bg-white/20 rounded-xl w-fit">
@@ -76,7 +77,7 @@ export default function LandingAudience() {
                 </li>
               ))}
             </ul>
-            <Link href="/register/partner" className="w-full py-3.5 bg-white text-primary font-semibold rounded-xl hover:bg-primary-light transition-colors mt-2 text-center block">
+            <Link href="/register/partner" className="w-full py-3.5 bg-white text-[#A60F30] font-semibold rounded-xl hover:bg-red-50 transition-colors mt-2 text-center block">
               {t("audience.partner_cta")}
             </Link>
           </motion.div>

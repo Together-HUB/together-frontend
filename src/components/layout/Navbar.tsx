@@ -1,23 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { Mail, MessageCircle, ChevronDown, X, Menu } from "lucide-react";
 
 const NAV_LINKS = [
   { key: "accueil", href: "/" },
-  { key: "repertoire", href: "#repertoire" },
-  { key: "financement", href: "#financement" },
-  { key: "evenements", href: "#evenements" },
-  { key: "sujets", href: "#sujets" },
-  { key: "succes", href: "#succes" },
+  { key: "repertoire", href: "/directory" },
+  { key: "financement", href: "/financement" },
+  { key: "evenements", href: "/evenements" },
+  { key: "sujets", href: "/sujets" },
+  { key: "succes", href: "/succes" },
 ];
 
 export default function Navbar() {
   const { t } = useTranslation("common");
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isActive = (href: string) => {
+    if (href === "/") return router.pathname === "/";
+    return router.pathname.startsWith(href);
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -46,27 +54,46 @@ export default function Navbar() {
           <div className="flex items-center justify-between h-16">
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="w-9 h-9 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/20 group-hover:shadow-md transition-shadow">
-                <span className="text-white font-bold text-sm tracking-tight leading-none">TN</span>
-              </div>
-              <span className="font-bold text-black text-lg leading-none tracking-tight">
-                ToGETHER <span className="text-primary">Networking</span>
-              </span>
+            <Link href="/" className="flex items-center flex-shrink-0">
+              <Image
+                src="/together.png"
+                alt="ToGETHER Networking"
+                width={140}
+                height={40}
+                className="object-contain h-10 w-auto"
+                priority
+              />
             </Link>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-6">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.key}
-                  href={link.href}
-                  className="text-gray text-sm font-medium hover:text-primary transition-colors relative group pb-0.5"
-                >
-                  {t(`nav.${link.key}`)}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
-                </a>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.href.startsWith("/") ? (
+                  <Link
+                    key={link.key}
+                    href={link.href}
+                    className={`text-sm font-medium hover:text-primary transition-colors relative group pb-0.5 ${
+                      isActive(link.href) ? "text-primary" : "text-gray"
+                    }`}
+                  >
+                    {t(`nav.${link.key}`)}
+                    <span
+                      className={`absolute bottom-0 left-0 h-0.5 bg-primary transition-all duration-200 ${
+                        isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+                ) : (
+                  <a
+                    key={link.key}
+                    href={link.href}
+                    className="text-gray text-sm font-medium hover:text-primary transition-colors relative group pb-0.5"
+                  >
+                    {t(`nav.${link.key}`)}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200 group-hover:w-full" />
+                  </a>
+                )
+              )}
             </div>
 
             {/* Desktop Right Actions */}
@@ -84,7 +111,7 @@ export default function Navbar() {
 
               {/* Email */}
               <a
-                href="mailto:adssebia2025@gmail.com"
+                href="mailto:contact@drctogethernetwork.org"
                 title={t("email_tooltip")}
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-primary hover:bg-primary-light transition-colors"
               >
@@ -157,17 +184,14 @@ export default function Navbar() {
           <div className="fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white z-50 shadow-2xl flex flex-col lg:hidden">
             {/* Drawer Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-              <Link
-                href="/"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 group"
-              >
-                <div className="w-8 h-8 rounded-xl bg-primary shadow-sm flex items-center justify-center ring-1 ring-primary/20">
-                  <span className="text-white font-bold text-xs tracking-tight">TN</span>
-                </div>
-                <span className="font-bold text-black tracking-tight">
-                  ToGETHER <span className="text-primary">Networking</span>
-                </span>
+              <Link href="/" onClick={() => setMobileOpen(false)}>
+                <Image
+                  src="/together.png"
+                  alt="ToGETHER Networking"
+                  width={120}
+                  height={34}
+                  className="object-contain h-8 w-auto"
+                />
               </Link>
               <button
                 onClick={() => setMobileOpen(false)}
@@ -180,16 +204,29 @@ export default function Navbar() {
 
             {/* Drawer Body */}
             <div className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-1">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.key}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="py-3 text-base font-medium text-gray hover:text-primary transition-colors border-b border-gray-50 last:border-0"
-                >
-                  {t(`nav.${link.key}`)}
-                </a>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.href.startsWith("/") ? (
+                  <Link
+                    key={link.key}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`py-3 text-base font-medium hover:text-primary transition-colors border-b border-gray-50 last:border-0 ${
+                      isActive(link.href) ? "text-primary" : "text-gray"
+                    }`}
+                  >
+                    {t(`nav.${link.key}`)}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.key}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="py-3 text-base font-medium text-gray hover:text-primary transition-colors border-b border-gray-50 last:border-0"
+                  >
+                    {t(`nav.${link.key}`)}
+                  </a>
+                )
+              )}
 
               <div className="flex gap-3 mt-6">
                 <a
@@ -202,7 +239,7 @@ export default function Navbar() {
                   WhatsApp
                 </a>
                 <a
-                  href="mailto:adssebia2025@gmail.com"
+                  href="mailto:contact@drctogethernetwork.org"
                   className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border border-primary text-primary font-medium text-sm hover:bg-primary-light transition-colors"
                 >
                   <Mail size={16} />

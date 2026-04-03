@@ -1,0 +1,52 @@
+export interface Organisation {
+  id: string;
+  name: string;
+  full_name: string;
+  acronym: string;
+  logo_url: string;
+  founded: number;
+  founded_date?: string;
+  founded_city?: string;
+  founded_province?: string;
+  province_primary: string;
+  city: string;
+  headquarters?: string;
+  website?: string;
+  contact_email?: string;
+  contact_email_1?: string;
+  contact_email_2?: string;
+  contact_phone?: string;
+  social?: {
+    twitter?: string;
+    facebook?: string;
+    linkedin?: string;
+  };
+  verified: boolean;
+  status: "active" | "pending" | "inactive";
+  provinces_covered: string[];
+  territories_sud_kivu?: string[];
+  sectors: string[];
+  description_fr: string;
+  description?: string;
+  mission_fr: string;
+  mission_points?: string[];
+  vision?: string;
+  domains?: string[];
+  values?: string[];
+  experience_years?: number;
+  experience_badge?: string;
+  staff_count?: number;
+  offices_count?: number;
+  impact_note?: string;
+  team_note?: string;
+  images?: string[];
+  map_image?: string;
+  partner_logos?: string[];
+  stats: {
+    projects_completed: number;
+    people_helped: number;
+    partners_count: number;
+    experience_years?: number;
+  };
+  tags: string[];
+}

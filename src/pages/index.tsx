@@ -1,4 +1,5 @@
 import type { GetStaticProps } from "next";
+import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 
 import Navbar from "@/components/layout/Navbar";
@@ -15,6 +16,10 @@ import LandingCTA from "@/components/modules/landing/LandingCTA";
 export default function Home() {
   return (
     <>
+      <Head>
+        <title>ToGETHER Networking RDCongo</title>
+        <meta name="description" content="ToGETHER Networking RDCongo connecte les acteurs humanitaires locaux pour renforcer la collaboration et le leadership local en République Démocratique du Congo." />
+      </Head>
       <Navbar />
       <main>
         <LandingHero />

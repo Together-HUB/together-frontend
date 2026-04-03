@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Head from "next/head";
 import {
   Building2, Handshake, User, CheckCircle, MessageCircle,
   Mail, Quote, Loader2, Check,
@@ -29,12 +30,12 @@ const ORG_TYPES = [
 ] as const;
 
 const PARTNERSHIP_TYPES = [
-  { key: "financement", emoji: "💰" },
-  { key: "technique", emoji: "🔧" },
-  { key: "plaidoyer", emoji: "📢" },
-  { key: "recherche", emoji: "🔬" },
-  { key: "operationnel", emoji: "🤝" },
-  { key: "information", emoji: "📡" },
+  { key: "financement" },
+  { key: "technique" },
+  { key: "plaidoyer" },
+  { key: "recherche" },
+  { key: "operationnel" },
+  { key: "information" },
 ] as const;
 
 const PARTNER_SECTORS = [
@@ -228,7 +229,7 @@ function BenefitsPanel() {
             {t("common.whatsapp_contact")}
           </a>
           <a
-            href="mailto:adssebia2025@gmail.com"
+            href="mailto:contact@drctogethernetwork.org"
             className="flex items-center gap-2 text-sm text-[#A60F30] hover:text-[#7A0A23]"
           >
             <Mail size={15} />
@@ -369,6 +370,10 @@ export default function RegisterPartner() {
 
   return (
     <>
+      <Head>
+        <title>S&apos;inscrire comme Partenaire — ToGETHER Networking</title>
+        <meta name="description" content="ToGETHER Networking RDCongo connecte les acteurs humanitaires locaux pour renforcer la collaboration et le leadership local en République Démocratique du Congo." />
+      </Head>
       <Navbar />
       <main className="min-h-screen bg-gray-50">
         {/* Page Header */}
@@ -516,7 +521,6 @@ export default function RegisterPartner() {
                                     active ? "border-[#A60F30] bg-[#FAEAED] text-[#A60F30]" : "border-gray-200 hover:border-[#A60F30]/40"
                                   }`}
                                 >
-                                  <span className="text-xl flex-shrink-0">{pt.emoji}</span>
                                   <div>
                                     <p className={`text-sm font-semibold ${active ? "text-[#A60F30]" : "text-gray-800"}`}>
                                       {t(`partner.step2.type_${pt.key}`)}

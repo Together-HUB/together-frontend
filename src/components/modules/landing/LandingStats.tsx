@@ -3,9 +3,10 @@ import { useTranslation } from "next-i18next/pages";
 import { motion, useInView } from "framer-motion";
 
 const PROVINCES = [
-  "Ituri", "Nord Kivu", "Sud Kivu", "Maniema", "Tanganyika",
-  "Haut-Lomami", "Lualaba", "Haut-Katanga", "Kinshasa",
-  "Kongo-Central", "Kasaï", "Équateur",
+  "Ituri", "Nord Kivu", "Sud Kivu", "Kinshasa",
+  "Maniema", "Tanganyika", "Haut-Katanga",
+  "Kasaï Central", "Kasaï", "Haut-Uélé",
+  "Nord-Ubangi", "Sud-Ubangi", "Haut-Lomami", "Équateur",
 ];
 
 export default function LandingStats() {
@@ -14,10 +15,10 @@ export default function LandingStats() {
   const inView = useInView(ref, { once: true });
 
   const stats = [
-    { value: "247", label: t("stats.ong") },
-    { value: "1,200+", label: t("stats.projects") },
-    { value: "2M+", label: t("stats.people") },
-    { value: "26", label: t("stats.provinces") },
+    { value: "5", label: t("stats.ong") },
+    { value: "12,780,000+", label: t("stats.projects") },
+    { value: "14", label: t("stats.people") },
+    { value: "27", label: t("stats.provinces") },
   ];
 
   return (

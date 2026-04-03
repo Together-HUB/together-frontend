@@ -15,7 +15,7 @@
   "whatsapp_tooltip": "Contact us on WhatsApp",
   "email_tooltip": "Send us an email",
   "footer": {
-    "brand_tagline": "Connecting local humanitarian actors for lasting impact in DRC",
+    "brand_tagline": "The future of humanitarian action is built locally.",
     "platform_heading": "PLATFORM",
     "join_heading": "JOIN",
     "contact_heading": "CONTACT",
@@ -30,11 +30,12 @@
       "about": "About"
     },
     "contact": {
-      "email": "adssebia2025@gmail.com",
+      "email": "contact@drctogethernetwork.org",
       "whatsapp": "+243 813 183 123",
-      "location": "Avenue Shari No. 35, Quartier Lumumba, Commune de Mbunya, Bunia — DR Congo",
+      "location_kinshasa": "Avenue du Bas-Congo No. 835, Commune de la Gombe, Kinshasa, DR Congo",
+      "location_bunia": "Avenue Shari No. 35, Quartier Lumumba, Commune Mbunya, Ville de Bunia — Ituri, DR Congo",
       "platform": "drctogethernetwork.org"
     },
-    "copyright": "© 2026 ToGETHER Networking. All rights reserved."
+    "copyright": "© 2026 ToGETHER Networking RDCongo. All rights reserved."
   }
 }

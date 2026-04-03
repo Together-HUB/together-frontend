@@ -35,7 +35,7 @@ export default function ProvinceMultiSelect({
 
   const checkColor = accentColor === "accent"
     ? "accent-[#A60F30]"
-    : "accent-[#562BD6]";
+    : "accent-[#006e8c]";
 
   return (
     <div>
