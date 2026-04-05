@@ -37,5 +37,52 @@
       "platform": "drctogethernetwork.org"
     },
     "copyright": "© 2026 ToGETHER Networking RDCongo. All rights reserved."
+  },
+  "pages": {
+    "back_home": "Back to home",
+    "coming_soon": "Coming soon",
+    "explore_directory": "Explore the directory",
+    "notify_launch": "Notify me at launch",
+    "meta_desc": "ToGETHER Networking RDCongo connects local humanitarian actors to strengthen collaboration and local leadership in the Democratic Republic of Congo.",
+    "financement": {
+      "page_title": "Funding — ToGETHER Networking",
+      "heading": "Funding",
+      "title": "Funding Opportunities",
+      "desc": "The funding module will centralise calls for projects, grants and partnership opportunities for local NGOs in DRC. Stay informed from launch.",
+      "feature1": "ECHO, AFD, UNICEF project calls and more",
+      "feature2": "Filters by province, sector and amount",
+      "feature3": "Email alerts as soon as a new opportunity is published",
+      "feature4": "Real-time application tracking"
+    },
+    "evenements": {
+      "page_title": "Events — ToGETHER Networking",
+      "heading": "Events",
+      "title": "Calendar & Events",
+      "desc": "The calendar will bring together trainings, cluster meetings, provincial coordination forums and all key events of the local humanitarian network in DRC.",
+      "feature1": "Training and capacity-building workshops",
+      "feature2": "Cluster meetings and coordination forums",
+      "feature3": "Webinars and online information sessions",
+      "feature4": "Inter-provincial agenda updated in real time"
+    },
+    "sujets": {
+      "page_title": "Topics — ToGETHER Networking",
+      "heading": "Topics & Library",
+      "title": "Topics & Resource Library",
+      "desc": "The resource library will bring together advocacy notes, impact reports, thematic guides and technical documents shared by network members.",
+      "feature1": "Impact reports and field case studies",
+      "feature2": "Advocacy notes and position papers",
+      "feature3": "Thematic guides by sector of intervention",
+      "feature4": "Resources organised by province and cluster"
+    },
+    "succes": {
+      "page_title": "Success Stories — ToGETHER Networking",
+      "heading": "Success Stories",
+      "title": "Success Stories",
+      "desc": "This section will highlight the concrete achievements of member NGOs — field testimonials, real impact figures and stories that illustrate the strength of local humanitarian leadership.",
+      "feature1": "Testimonials from beneficiaries and assisted communities",
+      "feature2": "Documented and verified impact figures",
+      "feature3": "Case studies by sector and province",
+      "feature4": "Portraits of network member organisations"
+    }
   }
 }

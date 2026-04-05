@@ -98,10 +98,14 @@
     "subtitle": "Join 5 organisations already collaborating on ToGETHER Networking. Free registration.",
     "btn1": "Register as an NGO",
     "btn2": "Register as a Partner",
-    "trust": "Free · Verified · Secure · Bilingual FR/EN"
+    "trust": "Free · Verified · Secure · Bilingual FR/EN",
+    "join_movement": "Become part of the movement",
+    "join_us": "Join Us",
+    "tagline": "Together, we build stronger communities"
   },
   "partners": {
     "label": "TRUSTED BY",
+    "subtitle": "Organisations and partners who trust Together",
     "partner1": "ECHO / DG ECHO",
     "partner2": "AFD",
     "partner3": "UNICEF DRC",

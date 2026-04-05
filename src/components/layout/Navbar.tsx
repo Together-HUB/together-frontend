@@ -120,12 +120,22 @@ export default function Navbar() {
 
               {/* Language Toggle */}
               <div className="flex items-center bg-gray-100 rounded-full p-0.5 gap-0.5">
-                <button className="px-3 py-1 rounded-full bg-primary text-white text-xs font-semibold">
-                  FR
-                </button>
-                <button className="px-3 py-1 rounded-full text-gray text-xs font-medium hover:text-primary transition-colors">
-                  EN
-                </button>
+                {(["fr", "en"] as const).map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => {
+                      document.cookie = `NEXT_LOCALE=${loc}; path=/; max-age=31536000; SameSite=Lax`;
+                      router.push({ pathname: router.pathname, query: router.query }, router.asPath, { locale: loc });
+                    }}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
+                      router.locale === loc
+                        ? "bg-primary text-white"
+                        : "text-gray hover:text-primary"
+                    }`}
+                  >
+                    {loc.toUpperCase()}
+                  </button>
+                ))}
               </div>
 
               {/* S'inscrire dropdown */}
@@ -228,7 +238,28 @@ export default function Navbar() {
                 )
               )}
 
-              <div className="flex gap-3 mt-6">
+              {/* Mobile Language Toggle */}
+              <div className="flex items-center justify-center bg-gray-100 rounded-full p-0.5 gap-0.5 mt-6">
+                {(["fr", "en"] as const).map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => {
+                      document.cookie = `NEXT_LOCALE=${loc}; path=/; max-age=31536000; SameSite=Lax`;
+                      router.push({ pathname: router.pathname, query: router.query }, router.asPath, { locale: loc });
+                      setMobileOpen(false);
+                    }}
+                    className={`flex-1 py-2 rounded-full text-sm font-semibold transition-colors ${
+                      router.locale === loc
+                        ? "bg-primary text-white"
+                        : "text-gray hover:text-primary"
+                    }`}
+                  >
+                    {loc === "fr" ? "Français" : "English"}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex gap-3 mt-4">
                 <a
                   href="https://wa.me/243813183123"
                   target="_blank"

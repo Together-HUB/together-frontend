@@ -98,10 +98,14 @@
     "subtitle": "Rejoignez 5 organisations qui collaborent déjà sur ToGETHER Networking. Inscription gratuite.",
     "btn1": "S'inscrire comme ONG",
     "btn2": "S'inscrire comme Partenaire",
-    "trust": "Gratuit · Vérifié · Sécurisé · Bilingue FR/EN"
+    "trust": "Gratuit · Vérifié · Sécurisé · Bilingue FR/EN",
+    "join_movement": "Rejoignez le mouvement",
+    "join_us": "Rejoignez-nous",
+    "tagline": "Ensemble, nous bâtissons des communautés plus fortes"
   },
   "partners": {
     "label": "ILS NOUS FONT CONFIANCE",
+    "subtitle": "Organisations et partenaires qui font confiance à Together",
     "partner1": "ECHO / DG ECHO",
     "partner2": "AFD",
     "partner3": "UNICEF RDC",

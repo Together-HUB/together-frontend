@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 
 export default function LandingCTA() {
   const { t } = useTranslation("landing");
@@ -23,14 +22,26 @@ export default function LandingCTA() {
           <p className="text-primary-light text-lg max-w-xl leading-relaxed">
             {t("cta.subtitle")}
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/register/ngo" className="px-8 py-3.5 bg-white text-primary font-bold rounded-xl hover:bg-primary-light transition-colors shadow-lg">
-              {t("cta.btn1")}
-            </Link>
-            <Link href="/register/partner" className="px-8 py-3.5 border-2 border-white text-white font-semibold rounded-xl hover:bg-white hover:text-primary transition-colors">
-              {t("cta.btn2")}
-            </Link>
+
+          {/* Join Us banner */}
+          <div className="mt-2 flex flex-col items-center gap-3">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-12 bg-white/30" />
+              <span className="text-white/60 text-xs uppercase tracking-widest font-medium">
+                {t("cta.join_movement")}
+              </span>
+              <span className="h-px w-12 bg-white/30" />
+            </div>
+            <div className="px-10 py-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm">
+              <p className="text-white text-2xl font-extrabold tracking-wide">
+                {t("cta.join_us")}
+              </p>
+              <p className="text-primary-light/80 text-sm mt-1">
+                {t("cta.tagline")}
+              </p>
+            </div>
           </div>
+
           <p className="text-primary-light/70 text-sm">{t("cta.trust")}</p>
         </motion.div>
       </div>

@@ -42,12 +42,9 @@ export default function LandingHero() {
 
           {/* CTAs */}
           <div className="flex flex-wrap gap-4">
-            <Link href="/register/ngo" className="px-6 py-3 bg-white text-primary font-bold rounded-xl hover:bg-primary-light transition-colors shadow-lg">
-              {t("hero.cta_join")}
-            </Link>
-            <button className="px-6 py-3 border-2 border-white text-white font-medium rounded-xl hover:bg-white hover:text-primary transition-colors">
+            <Link href="/directory" className="px-6 py-3 bg-white text-primary font-bold rounded-xl hover:bg-primary-light transition-colors shadow-lg">
               {t("hero.cta_explore")}
-            </button>
+            </Link>
           </div>
 
           {/* Trust line */}

@@ -54,13 +54,31 @@ export default function Footer() {
               {t("footer.platform_heading")}
             </h4>
             <ul className="flex flex-col gap-2.5">
-              {(["repertoire", "financement", "evenements", "bibliotheque", "dashboard"] as const).map((key) => (
-                <li key={key}>
-                  <a href="#" className="text-gray text-sm hover:text-white transition-colors">
-                    {t(`footer.links.${key}`)}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link href="/directory" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.repertoire")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/financement" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.financement")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/evenements" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.evenements")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/sujets" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.bibliotheque")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/succes" className="text-gray text-sm hover:text-white transition-colors">
+                  {t("footer.links.dashboard")}
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -81,9 +99,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-gray text-sm hover:text-white transition-colors">
+                <Link href="/" className="text-gray text-sm hover:text-white transition-colors">
                   {t("footer.links.about")}
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

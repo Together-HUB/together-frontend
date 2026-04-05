@@ -37,5 +37,52 @@
       "platform": "drctogethernetwork.org"
     },
     "copyright": "© 2026 ToGETHER Networking RDCongo. Tous droits réservés."
+  },
+  "pages": {
+    "back_home": "Retour à l'accueil",
+    "coming_soon": "Prochainement disponible",
+    "explore_directory": "Explorer le répertoire",
+    "notify_launch": "Me notifier au lancement",
+    "meta_desc": "ToGETHER Networking RDCongo connecte les acteurs humanitaires locaux pour renforcer la collaboration et le leadership local en République Démocratique du Congo.",
+    "financement": {
+      "page_title": "Financement — ToGETHER Networking",
+      "heading": "Financement",
+      "title": "Opportunités de Financement",
+      "desc": "Le module de financement centralisera les appels à projets, subventions et opportunités de partenariat destinés aux ONG locales de la RDC. Restez informé dès son lancement.",
+      "feature1": "Appels à projets ECHO, AFD, UNICEF et plus",
+      "feature2": "Filtres par province, secteur et montant",
+      "feature3": "Alertes email dès la publication d'une nouvelle opportunité",
+      "feature4": "Suivi de vos candidatures en temps réel"
+    },
+    "evenements": {
+      "page_title": "Événements — ToGETHER Networking",
+      "heading": "Événements",
+      "title": "Calendrier & Événements",
+      "desc": "Le calendrier regroupera les formations, réunions de cluster, forums de coordination provinciaux et tous les événements clés du réseau humanitaire local en RDC.",
+      "feature1": "Formations et ateliers de renforcement des capacités",
+      "feature2": "Réunions de cluster et forums de coordination",
+      "feature3": "Webinaires et sessions d'information en ligne",
+      "feature4": "Agenda interprovincial mis à jour en temps réel"
+    },
+    "sujets": {
+      "page_title": "Sujets — ToGETHER Networking",
+      "heading": "Sujets & Bibliothèque",
+      "title": "Sujets & Bibliothèque de Ressources",
+      "desc": "La bibliothèque de ressources rassemblera les notes de plaidoyer, rapports d'impact, guides thématiques et documents techniques partagés par les membres du réseau.",
+      "feature1": "Rapports d'impact et études de cas terrain",
+      "feature2": "Notes de plaidoyer et documents de position",
+      "feature3": "Guides thématiques par secteur d'intervention",
+      "feature4": "Ressources classées par province et par cluster"
+    },
+    "succes": {
+      "page_title": "Histoires de succès — ToGETHER Networking",
+      "heading": "Histoires de Succès",
+      "title": "Histoires de Succès",
+      "desc": "Cette section mettra en lumière les réalisations concrètes des ONG membres du réseau — des témoignages de terrain, des chiffres d'impact réels et des récits qui illustrent la force du leadership humanitaire local.",
+      "feature1": "Témoignages de bénéficiaires et de communautés aidées",
+      "feature2": "Chiffres d'impact documentés et vérifiés",
+      "feature3": "Études de cas par secteur et par province",
+      "feature4": "Portraits des organisations membres du réseau"
+    }
   }
 }
