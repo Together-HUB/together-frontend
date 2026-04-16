@@ -8,10 +8,10 @@ import { Mail, MessageCircle, ChevronDown, X, Menu } from "lucide-react";
 const NAV_LINKS = [
   { key: "accueil", href: "/" },
   { key: "repertoire", href: "/directory" },
-  { key: "financement", href: "/financement" },
-  { key: "evenements", href: "/evenements" },
-  { key: "sujets", href: "/sujets" },
-  { key: "succes", href: "/succes" },
+  // { key: "financement", href: "/financement" },   // Coming soon
+  // { key: "evenements", href: "/evenements" },     // Coming soon
+  // { key: "sujets", href: "/sujets" },             // Coming soon
+  // { key: "succes", href: "/succes" },             // Coming soon
 ];
 
 export default function Navbar() {
