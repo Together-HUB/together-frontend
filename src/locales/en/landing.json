@@ -22,9 +22,9 @@
   },
   "stats": {
     "ong": "VERIFIED NGO MEMBERS",
-    "projects": "PEOPLE HELPED",
-    "people": "PROVINCES COVERED",
-    "provinces": "YEARS OF CUMULATIVE EXPERIENCE",
+    "people_helped": "PEOPLE HELPED",
+    "projects_completed": "PROJECTS COMPLETED",
+    "provinces_covered": "PROVINCES COVERED",
     "provinces_label": "14 provinces covered by the network"
   },
   "modules": {
@@ -83,14 +83,16 @@
     "quote1": "Over 27 years, ADSSE has supported displaced populations through 19 offices across the country.",
     "org1": "ADSSE — Present in 14 provinces",
     "metric1": "9,628,000 IDPs assisted",
-    "badge2": "Refugees",
-    "quote2": "ToGETHER Networking facilitates coordination between local actors for a faster and better-targeted humanitarian response.",
-    "org2": "ToGETHER Network — Ituri, North & South Kivu",
-    "metric2": "983,000 refugees assisted by ADSSE",
-    "badge3": "Host communities",
-    "quote3": "Local leadership is at the heart of an effective humanitarian response grounded in the realities of the field.",
-    "org3": "ADSSE — DR Congo",
-    "metric3": "2,169,000 host community members helped",
+    "badge2": "Shelter & NFI",
+    "quote2": "285 returnee households and vulnerable host communities received essential household items following armed conflict in North Kivu.",
+    "org2": "AIDES — Goma, North Kivu",
+    "metric2": "2,410 people assisted · 67,318 EUR",
+    "period2": "Oct — Dec 2025",
+    "badge3": "Protection",
+    "quote3": "234,810 children and women affected by armed conflict in South Kivu received holistic protection support over 3 years.",
+    "org3": "TPO DRC — Bukavu, South Kivu",
+    "metric3": "234,810 people assisted · 6,000,000 USD",
+    "period3": "2022 — 2025",
     "see_all": "View all stories →"
   },
   "cta": {

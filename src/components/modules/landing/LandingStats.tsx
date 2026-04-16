@@ -16,9 +16,9 @@ export default function LandingStats() {
 
   const stats = [
     { value: "5", label: t("stats.ong") },
-    { value: "12,780,000+", label: t("stats.projects") },
-    { value: "14", label: t("stats.people") },
-    { value: "27", label: t("stats.provinces") },
+    { value: "12,780,000+", label: t("stats.people_helped") },
+    { value: "132+", label: t("stats.projects_completed") },
+    { value: "14", label: t("stats.provinces_covered") },
   ];
 
   return (

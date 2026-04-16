@@ -1,5 +1,6 @@
 export interface Organisation {
   id: string;
+  slug?: string;
   name: string;
   full_name: string;
   acronym: string;
@@ -11,6 +12,8 @@ export interface Organisation {
   province_primary: string;
   city: string;
   headquarters?: string;
+  headquarters_city?: string;
+  operational_offices?: string[];
   website?: string;
   contact_email?: string;
   contact_email_1?: string;
@@ -28,7 +31,7 @@ export interface Organisation {
   sectors: string[];
   description_fr: string;
   description?: string;
-  mission_fr: string;
+  mission_fr?: string;
   mission_points?: string[];
   vision?: string;
   domains?: string[];
@@ -47,6 +50,34 @@ export interface Organisation {
     people_helped: number;
     partners_count: number;
     experience_years?: number;
+    staff_min?: number;
+    staff_max?: number;
   };
+  success_story?: SuccessStory;
+  success_stories?: SuccessStory[];
   tags: string[];
+}
+
+export interface SuccessStory {
+  id?: string;
+  title: string;
+  organisation: string;
+  period: string;
+  duration?: string;
+  description: string;
+  results: {
+    people_assisted: number;
+    funding_obtained?: string;
+    funding_source?: string;
+    villages_covered?: number;
+    households_reached?: number;
+    distributions?: number;
+    provinces_covered?: number;
+    zones_covered?: number;
+    location?: string;
+    beneficiary_profile?: string;
+  };
+  location?: string;
+  sector: string;
+  metric_display: string;
 }

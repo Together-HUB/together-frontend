@@ -16,6 +16,13 @@ import {
   ChevronRight,
   X,
   ArrowRight,
+  Calendar,
+  Mail,
+  Users,
+  Building2,
+  Phone,
+  Star,
+  ExternalLink,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -156,7 +163,7 @@ function PhotoSlider({ images }: { images: string[] }) {
   };
 
   return (
-    <div className="relative rounded-xl overflow-hidden bg-gray-100 h-56 select-none">
+    <div className="relative rounded-2xl overflow-hidden bg-gray-900 select-none" style={{ height: 420 }}>
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={current}
@@ -165,51 +172,57 @@ function PhotoSlider({ images }: { images: string[] }) {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.35, ease: [0.32, 0, 0.67, 0] }}
-          className="absolute inset-0"
+          transition={{ duration: 0.4, ease: [0.32, 0, 0.67, 0] }}
+          className="absolute inset-0 flex items-center justify-center"
         >
           {imgErrors[current] ? (
-            <div className="w-full h-full flex items-center justify-center bg-gray-100">
-              <span className="text-gray-400 text-sm">Photo {current + 1}</span>
+            <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gray-900">
+              <div className="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center">
+                <span className="text-gray-600 text-2xl">🖼</span>
+              </div>
+              <span className="text-gray-500 text-sm">Photo {current + 1}</span>
             </div>
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={images[current]}
               alt={`Photo ${current + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               onError={() => setImgErrors((p) => ({ ...p, [current]: true }))}
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+          {/* Subtle vignette at bottom for controls readability */}
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
         </motion.div>
       </AnimatePresence>
 
       {/* Arrows */}
       <button onClick={prev} aria-label="Précédent"
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-1.5 shadow transition-all">
-        <ChevronLeft size={18} />
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all hover:scale-105">
+        <ChevronLeft size={20} />
       </button>
       <button onClick={next} aria-label="Suivant"
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-1.5 shadow transition-all">
-        <ChevronRight size={18} />
+        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all hover:scale-105">
+        <ChevronRight size={20} />
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
+      {/* Dot indicators */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
         {images.map((_, i) => (
           <button key={i} onClick={() => go(i, i > current ? 1 : -1)}
             aria-label={`Photo ${i + 1}`}
-            className={`rounded-full transition-all duration-200 ${
-              i === current ? "w-5 h-2 bg-white" : "w-2 h-2 bg-white/50 hover:bg-white/80"
+            className={`rounded-full transition-all duration-300 ${
+              i === current
+                ? "w-6 h-2 bg-white shadow"
+                : "w-2 h-2 bg-white/40 hover:bg-white/70"
             }`}
           />
         ))}
       </div>
 
       {/* Counter badge */}
-      <div className="absolute top-2.5 right-3 z-10 bg-black/40 text-white text-xs px-2 py-0.5 rounded-full">
-        {current + 1}/{images.length}
+      <div className="absolute top-3 right-3 z-10 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
+        {current + 1} / {images.length}
       </div>
     </div>
   );
@@ -257,6 +270,24 @@ function LogosSlider({ logos }: { logos: string[] }) {
   );
 }
 
+// ─── Map Image (with fallback) ────────────────────────────────────────────────
+
+function MapImage({ src, alt }: { src: string; alt: string }) {
+  const [errored, setErrored] = useState(false);
+  if (errored) return null;
+  return (
+    <div className="rounded-xl overflow-hidden border border-gray-100 bg-gray-50">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        className="w-full object-contain max-h-64"
+        onError={() => setErrored(true)}
+      />
+    </div>
+  );
+}
+
 // ─── Expanded Card Modal ──────────────────────────────────────────────────────
 
 function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void }) {
@@ -271,7 +302,7 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.2 }}
-        className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm"
         onClick={onClose}
       >
         {/* Card */}
@@ -281,10 +312,10 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 24 }}
           transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[88vh] overflow-y-auto"
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header */}
+          {/* ── Sticky header ── */}
           <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
             <div className="flex items-center gap-3">
               <OrgLogo src={org.logo_url} name={org.acronym} width={48} height={36} />
@@ -307,41 +338,246 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
             </button>
           </div>
 
-          {/* Body */}
+          {/* ── Body ── */}
           <div className="px-6 py-5 space-y-6">
-            {/* Photo slider — shown when images are available */}
+
+            {/* Photo slider */}
             {org.images && org.images.length > 0 && (
               <PhotoSlider images={org.images} />
             )}
 
-            {/* Full name + location */}
+            {/* Full name + location + founding */}
             <div>
-              <h2 className="text-lg font-bold text-gray-900 leading-snug">{org.full_name}</h2>
-              <div className="flex items-center gap-1.5 mt-2">
-                <MapPin size={13} className="text-gray-400 flex-shrink-0" />
-                <span className="text-sm text-gray-500">{org.city}, {org.province_primary} — RD Congo</span>
+              <h2 className="text-xl font-bold text-gray-900 leading-snug">{org.full_name}</h2>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2">
+                <div className="flex items-center gap-1.5">
+                  <MapPin size={13} className="text-gray-400 flex-shrink-0" />
+                  <span className="text-sm text-gray-500">{org.city}, {org.province_primary} — RD Congo</span>
+                </div>
+                {org.founded_date && (
+                  <div className="flex items-center gap-1.5">
+                    <Calendar size={12} className="text-gray-400 flex-shrink-0" />
+                    <span className="text-sm text-gray-500">
+                      Créée le {org.founded_date}
+                      {org.founded_city ? ` à ${org.founded_city}` : ""}
+                      {org.founded_province ? `, ${org.founded_province}` : ""}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Description — full, no clamp */}
+            {/* ── Experience badge ── */}
+            {org.experience_badge && (
+              <div className="flex items-center gap-2.5 bg-primary/5 border border-primary/15 rounded-xl px-4 py-3">
+                <span className="text-primary text-lg font-black leading-none">
+                  {org.experience_years ?? org.founded ? new Date().getFullYear() - org.founded : ""}+
+                </span>
+                <span className="text-sm text-primary/80 font-medium">{org.experience_badge}</span>
+              </div>
+            )}
+
+            {/* ── Key facts strip ── */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {/* Founded */}
+              <div className="flex flex-col items-center gap-1.5 bg-primary/5 rounded-xl p-3 text-center">
+                <Calendar size={16} className="text-primary" />
+                <p className="text-base font-bold text-gray-900">{org.founded}</p>
+                <p className="text-xs text-gray-500">Fondée</p>
+              </div>
+
+              {/* Staff */}
+              {(org.staff_count || org.stats.staff_min) && (
+                <div className="flex flex-col items-center gap-1.5 bg-accent/5 rounded-xl p-3 text-center">
+                  <Users size={16} className="text-accent" />
+                  <p className="text-base font-bold text-gray-900">
+                    {org.stats.staff_min && org.stats.staff_max
+                      ? `${org.stats.staff_min}–${org.stats.staff_max}`
+                      : org.staff_count}
+                  </p>
+                  <p className="text-xs text-gray-500">Membres</p>
+                </div>
+              )}
+
+              {/* Offices */}
+              {org.offices_count && (
+                <div className="flex flex-col items-center gap-1.5 bg-green-50 rounded-xl p-3 text-center">
+                  <Building2 size={16} className="text-green-600" />
+                  <p className="text-base font-bold text-gray-900">{org.offices_count}</p>
+                  <p className="text-xs text-gray-500">Bureaux</p>
+                </div>
+              )}
+
+              {/* Provinces */}
+              <div className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-xl p-3 text-center">
+                <Globe size={16} className="text-gray-500" />
+                <p className="text-base font-bold text-gray-900">{org.provinces_covered.length}</p>
+                <p className="text-xs text-gray-500">Provinces</p>
+              </div>
+            </div>
+
+            {/* ── Contact info ── */}
+            {(org.contact_email || org.contact_phone || org.website || org.social) && (
+              <div className="bg-gray-50 rounded-xl p-4 space-y-2.5">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Contact & Liens</p>
+
+                {org.contact_email && (
+                  <a
+                    href={`mailto:${org.contact_email}`}
+                    className="flex items-center gap-2.5 text-sm text-gray-700 hover:text-primary transition-colors group"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 group-hover:border-primary/40 transition-colors">
+                      <Mail size={13} className="text-gray-400 group-hover:text-primary transition-colors" />
+                    </span>
+                    {org.contact_email}
+                  </a>
+                )}
+
+                {org.contact_email_2 && org.contact_email_2 !== org.contact_email && (
+                  <a
+                    href={`mailto:${org.contact_email_2}`}
+                    className="flex items-center gap-2.5 text-sm text-gray-700 hover:text-primary transition-colors group"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 group-hover:border-primary/40 transition-colors">
+                      <Mail size={13} className="text-gray-400 group-hover:text-primary transition-colors" />
+                    </span>
+                    {org.contact_email_2}
+                  </a>
+                )}
+
+                {org.contact_phone && (
+                  <a
+                    href={`tel:${org.contact_phone}`}
+                    className="flex items-center gap-2.5 text-sm text-gray-700 hover:text-primary transition-colors group"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 group-hover:border-primary/40 transition-colors">
+                      <Phone size={13} className="text-gray-400 group-hover:text-primary transition-colors" />
+                    </span>
+                    {org.contact_phone}
+                  </a>
+                )}
+
+                {org.website && (
+                  <a
+                    href={org.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2.5 text-sm text-gray-700 hover:text-primary transition-colors group"
+                  >
+                    <span className="w-7 h-7 rounded-lg bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 group-hover:border-primary/40 transition-colors">
+                      <Globe size={13} className="text-gray-400 group-hover:text-primary transition-colors" />
+                    </span>
+                    {org.website.replace(/^https?:\/\//, "")}
+                  </a>
+                )}
+
+                {(org.social?.twitter || org.social?.facebook) && (
+                  <div className="flex items-center gap-2 pt-1">
+                    {org.social.twitter && (
+                      <a
+                        href={org.social.twitter}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-primary bg-white border border-gray-200 px-3 py-1.5 rounded-lg hover:border-primary/40 transition-all"
+                      >
+                        <ExternalLink size={12} />
+                        Twitter / X
+                      </a>
+                    )}
+                    {org.social.facebook && (
+                      <a
+                        href={org.social.facebook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-xs font-medium text-gray-600 hover:text-primary bg-white border border-gray-200 px-3 py-1.5 rounded-lg hover:border-primary/40 transition-all"
+                      >
+                        <ExternalLink size={12} />
+                        Facebook
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* ── Headquarters note ── */}
+            {org.headquarters && (
+              <div className="flex items-start gap-2.5 text-sm text-gray-600">
+                <Building2 size={14} className="text-gray-400 flex-shrink-0 mt-0.5" />
+                <span>{org.headquarters}</span>
+              </div>
+            )}
+
+            {/* ── About ── */}
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                À propos
-              </p>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">À propos</p>
               <p className="text-sm text-gray-700 leading-relaxed">{org.description_fr}</p>
             </div>
 
-            {/* Mission */}
-            <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                Mission
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed italic border-l-4 border-primary/40 pl-3">
-                {org.mission_fr}
-              </p>
-            </div>
+            {/* ── Vision ── */}
+            {org.vision && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Vision</p>
+                <p className="text-sm text-gray-600 leading-relaxed italic border-l-4 border-accent/40 pl-3">
+                  {org.vision}
+                </p>
+              </div>
+            )}
 
-            {/* All sectors */}
+            {/* ── Mission ── */}
+            {(org.mission_fr || (org.mission_points && org.mission_points.length > 0)) && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Mission</p>
+                {org.mission_points && org.mission_points.length > 0 ? (
+                  <ul className="space-y-2">
+                    {org.mission_points.map((point, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600 leading-relaxed">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-600 leading-relaxed italic border-l-4 border-primary/40 pl-3">
+                    {org.mission_fr}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* ── Domains ── */}
+            {org.domains && org.domains.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Domaines d&apos;intervention</p>
+                <div className="space-y-2">
+                  {org.domains.map((domain, i) => (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="mt-1 w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary font-bold text-xs">
+                        {i + 1}
+                      </span>
+                      <p className="text-sm text-gray-700 leading-relaxed">{domain}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Values ── */}
+            {org.values && org.values.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Valeurs</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {org.values.map((val, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-green-50 border border-green-100 rounded-lg px-3 py-2">
+                      <CheckCircle size={13} className="text-green-500 flex-shrink-0" />
+                      <span className="text-xs text-gray-700 font-medium">{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Sectors ── */}
             <div>
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                 {t("sectors")}
@@ -355,7 +591,7 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
               </div>
             </div>
 
-            {/* Provinces */}
+            {/* ── Provinces ── */}
             <div>
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
                 {t("intervention_zones")}
@@ -369,25 +605,159 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
               </div>
             </div>
 
-            {/* Stats row */}
-            <div className="grid grid-cols-3 gap-3 bg-gray-50 rounded-xl p-4">
-              <div className="text-center">
-                <p className="text-lg font-bold text-primary">{org.stats.projects_completed}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{t("projects_completed")}</p>
-              </div>
-              <div className="text-center border-x border-gray-200">
-                <p className="text-lg font-bold text-primary">
-                  {org.stats.people_helped.toLocaleString("fr-FR")}+
+            {/* ── Territories (Sud Kivu detail) ── */}
+            {org.territories_sud_kivu && org.territories_sud_kivu.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                  Territoires couverts — Sud Kivu
                 </p>
-                <p className="text-xs text-gray-500 mt-0.5">{t("people_helped")}</p>
+                <div className="space-y-1.5">
+                  {org.territories_sud_kivu.map((territory) => (
+                    <div key={territory} className="flex items-start gap-2 text-xs text-gray-600 bg-gray-50 rounded-lg px-3 py-2">
+                      <MapPin size={11} className="text-gray-400 flex-shrink-0 mt-0.5" />
+                      {territory}
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="text-center">
-                <p className="text-lg font-bold text-primary">{org.stats.partners_count}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{t("partners")}</p>
+            )}
+
+            {/* ── Map image ── */}
+            {org.map_image && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                  Carte des interventions
+                </p>
+                <MapImage src={org.map_image} alt={`Carte des interventions — ${org.acronym}`} />
               </div>
+            )}
+
+            {/* ── Operational offices ── */}
+            {org.operational_offices && org.operational_offices.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                  Bureaux opérationnels
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                  {org.operational_offices.map((office) => (
+                    <div key={office} className="flex items-center gap-2 text-xs text-gray-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/50 flex-shrink-0" />
+                      {office}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ── Impact stats ── */}
+            <div>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Impact</p>
+              <div className="grid grid-cols-3 gap-3 bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-4 border border-primary/10">
+                <div className="text-center">
+                  <p className="text-xl font-bold text-primary">{org.stats.projects_completed}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t("projects_completed")}</p>
+                </div>
+                <div className="text-center border-x border-primary/10">
+                  <p className="text-xl font-bold text-primary">
+                    {org.stats.people_helped >= 1000000
+                      ? `${(org.stats.people_helped / 1000000).toFixed(1)}M`
+                      : org.stats.people_helped.toLocaleString("fr-FR")}+
+                  </p>
+                  <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t("people_helped")}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xl font-bold text-primary">{org.stats.partners_count}</p>
+                  <p className="text-xs text-gray-500 mt-0.5 leading-tight">{t("partners")}</p>
+                </div>
+              </div>
+              {org.impact_note && (
+                <p className="text-xs text-gray-500 leading-relaxed mt-2.5 pl-1 italic">{org.impact_note}</p>
+              )}
+              {org.team_note && (
+                <div className="flex items-center gap-2 mt-2.5 pl-1">
+                  <Users size={12} className="text-gray-400 flex-shrink-0" />
+                  <p className="text-xs text-gray-500 italic">{org.team_note}</p>
+                </div>
+              )}
             </div>
 
-            {/* Partner logos slider — shown when logos are available */}
+            {/* ── Success stories ── */}
+            {(() => {
+              const stories = org.success_stories ?? (org.success_story ? [org.success_story] : []);
+              if (stories.length === 0) return null;
+              return (
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Star size={14} className="text-accent fill-accent" />
+                    <p className="text-xs font-semibold text-accent uppercase tracking-wide">
+                      {stories.length > 1 ? `Histoires de succès (${stories.length})` : "Histoire de succès"}
+                    </p>
+                  </div>
+                  <div className="space-y-4">
+                    {stories.map((story, idx) => (
+                      <div key={story.id ?? idx} className="border border-accent/20 bg-accent/5 rounded-xl p-4 space-y-3">
+                        <div className="flex items-start justify-between gap-2">
+                          <p className="text-sm font-semibold text-gray-900 leading-snug flex-1">{story.title}</p>
+                          <span className="text-xs bg-accent/10 text-accent font-medium px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">
+                            {story.sector}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <p className="text-xs text-gray-500">{story.period}</p>
+                          {story.duration && (
+                            <span className="text-xs text-gray-400">· {story.duration}</span>
+                          )}
+                        </div>
+                        <p className="text-sm text-gray-700 leading-relaxed">{story.description}</p>
+                        <div className="grid grid-cols-2 gap-2 pt-1">
+                          <div className="bg-white rounded-lg px-3 py-2 text-center border border-accent/10">
+                            <p className="text-sm font-bold text-accent">{story.results.people_assisted.toLocaleString("fr-FR")}</p>
+                            <p className="text-xs text-gray-500">Personnes assistées</p>
+                          </div>
+                          {story.results.funding_obtained && (
+                            <div className="bg-white rounded-lg px-3 py-2 text-center border border-accent/10">
+                              <p className="text-sm font-bold text-accent">{story.results.funding_obtained}</p>
+                              <p className="text-xs text-gray-500">
+                                {story.results.funding_source ? `Financé par ${story.results.funding_source}` : "Financement obtenu"}
+                              </p>
+                            </div>
+                          )}
+                          {story.results.households_reached && (
+                            <div className="bg-white rounded-lg px-3 py-2 text-center border border-accent/10">
+                              <p className="text-sm font-bold text-accent">{story.results.households_reached.toLocaleString("fr-FR")}</p>
+                              <p className="text-xs text-gray-500">Ménages atteints</p>
+                            </div>
+                          )}
+                          {story.results.villages_covered && (
+                            <div className="bg-white rounded-lg px-3 py-2 text-center border border-accent/10">
+                              <p className="text-sm font-bold text-accent">{story.results.villages_covered}</p>
+                              <p className="text-xs text-gray-500">Villages couverts</p>
+                            </div>
+                          )}
+                          {story.results.distributions && (
+                            <div className="bg-white rounded-lg px-3 py-2 text-center border border-accent/10">
+                              <p className="text-sm font-bold text-accent">{story.results.distributions}</p>
+                              <p className="text-xs text-gray-500">Distributions</p>
+                            </div>
+                          )}
+                        </div>
+                        {(story.location ?? story.results.location) && (
+                          <div className="flex items-center gap-1.5 pt-1">
+                            <MapPin size={11} className="text-gray-400 flex-shrink-0" />
+                            <p className="text-xs text-gray-500">{story.location ?? story.results.location}</p>
+                          </div>
+                        )}
+                        {story.results.beneficiary_profile && (
+                          <p className="text-xs text-gray-500 italic">{story.results.beneficiary_profile}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* ── Partner logos ── */}
             {org.partner_logos && org.partner_logos.length > 0 && (
               <div>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">
@@ -398,7 +768,7 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
             )}
           </div>
 
-          {/* Footer CTA */}
+          {/* ── Footer CTA ── */}
           <div className="sticky bottom-0 bg-white border-t border-gray-100 px-6 py-4 flex items-center gap-3 rounded-b-2xl">
             <button
               type="button"
@@ -407,6 +777,15 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
             >
               Fermer
             </button>
+            {org.contact_email ? (
+              <a
+                href={`mailto:${org.contact_email}`}
+                className="flex-1 py-2.5 rounded-xl border border-primary text-primary text-sm font-semibold hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
+              >
+                <Mail size={14} />
+                Contacter
+              </a>
+            ) : null}
             {org.website ? (
               <a
                 href={org.website}
@@ -414,7 +793,7 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
                 rel="noopener noreferrer"
                 className="flex-1 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors flex items-center justify-center gap-2"
               >
-                Profil complet
+                Site web
                 <ArrowRight size={15} />
               </a>
             ) : (

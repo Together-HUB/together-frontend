@@ -19,9 +19,9 @@ export default function Footer() {
                 <Image
                   src="/together.png"
                   alt="ToGETHER Networking"
-                  width={140}
-                  height={40}
-                  className="object-contain h-9 w-auto"
+                  width={200}
+                  height={56}
+                  className="object-contain h-14 w-auto"
                 />
               </div>
             </Link>

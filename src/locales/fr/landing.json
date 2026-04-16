@@ -22,9 +22,9 @@
   },
   "stats": {
     "ong": "ONG MEMBRES VÉRIFIÉES",
-    "projects": "PERSONNES AIDÉES",
-    "people": "PROVINCES COUVERTES",
-    "provinces": "ANS D'EXPÉRIENCE CUMULÉE",
+    "people_helped": "PERSONNES AIDÉES",
+    "projects_completed": "PROJETS RÉALISÉS",
+    "provinces_covered": "PROVINCES COUVERTES",
     "provinces_label": "14 provinces couvertes par le réseau"
   },
   "modules": {
@@ -83,14 +83,16 @@
     "quote1": "En 27 ans, l'ADSSE a accompagné les populations déplacées à travers 19 bureaux dans tout le pays.",
     "org1": "ADSSE — Présente dans 14 provinces",
     "metric1": "9,628,000 personnes déplacées assistées",
-    "badge2": "Réfugiés",
-    "quote2": "ToGETHER Networking facilite la coordination entre acteurs locaux pour une réponse humanitaire plus rapide et mieux ciblée.",
-    "org2": "Réseau ToGETHER — Ituri, Nord & Sud Kivu",
-    "metric2": "983,000 réfugiés assistés par l'ADSSE",
-    "badge3": "Communautés hôtes",
-    "quote3": "Le leadership local est au cœur d'une réponse humanitaire efficace et ancrée dans les réalités du terrain.",
-    "org3": "ADSSE — RD Congo",
-    "metric3": "2,169,000 membres de communautés hôtes aidés",
+    "badge2": "Abris & AME",
+    "quote2": "285 ménages retournés et communautés hôtes ont reçu des articles ménagers essentiels suite aux conflits armés dans le Nord-Kivu.",
+    "org2": "AIDES — Goma, Nord Kivu",
+    "metric2": "2,410 personnes assistées · 67,318 EUR",
+    "period2": "Oct — Déc 2025",
+    "badge3": "Protection",
+    "quote3": "234,810 enfants et femmes affectés par les conflits armés dans le Sud-Kivu ont reçu une assistance en protection et prise en charge holistique sur 3 ans.",
+    "org3": "TPO DRC — Bukavu, Sud Kivu",
+    "metric3": "234,810 personnes assistées · 6,000,000 USD",
+    "period3": "2022 — 2025",
     "see_all": "Voir toutes les histoires →"
   },
   "cta": {

@@ -58,9 +58,9 @@ export default function Navbar() {
               <Image
                 src="/together.png"
                 alt="ToGETHER Networking"
-                width={140}
-                height={40}
-                className="object-contain h-10 w-auto"
+                width={200}
+                height={56}
+                className="object-contain h-14 w-auto"
                 priority
               />
             </Link>
@@ -198,9 +198,9 @@ export default function Navbar() {
                 <Image
                   src="/together.png"
                   alt="ToGETHER Networking"
-                  width={120}
-                  height={34}
-                  className="object-contain h-8 w-auto"
+                  width={160}
+                  height={46}
+                  className="object-contain h-12 w-auto"
                 />
               </Link>
               <button
