@@ -37,7 +37,7 @@
       "badge": "Inscription ONG",
       "title": "Inscrivez votre organisation",
       "subtitle": "Rejoignez le réseau humanitaire local de la RDC et accédez aux opportunités de financement, de coordination et de visibilité.",
-      "stat1": "5 ONG membres · 14 provinces · 12,780,000+ personnes aidées · Accès gratuit",
+      "stat1": "7 ONG membres · 14 provinces · 12,780,000+ personnes aidées · Accès gratuit",
       "stat2": "Vérification sous 48h",
       "stat3": "100% gratuit"
     },
@@ -50,7 +50,7 @@
       "title": "Pourquoi rejoindre ?",
       "b1": "Accès aux appels à projets et subventions",
       "b2": "Visibilité auprès des partenaires internationaux",
-      "b3": "Réseau interprovincial de 5 ONG vérifiées",
+      "b3": "Réseau interprovincial de 7 ONG vérifiées",
       "b4": "Outils de plaidoyer et bibliothèque de ressources",
       "b5": "Tableau de bord de suivi d'impact personnalisé",
       "testimonial": "Grâce à cette plateforme, nous avons obtenu un financement de 150,000€ en 3 mois.",
@@ -151,8 +151,8 @@
     "header": {
       "badge": "Inscription Partenaire",
       "title": "Devenez partenaire stratégique",
-      "subtitle": "Accédez à un réseau de 5 ONG locales vérifiées actives dans 14 provinces de la RDC. Publiez vos appels à projets et suivez l'impact de vos financements.",
-      "stat1": "Accédez à 5 ONG vérifiées actives dans 14 provinces de la RDC",
+      "subtitle": "Accédez à un réseau de 7 ONG locales vérifiées actives dans 14 provinces de la RDC. Publiez vos appels à projets et suivez l'impact de vos financements.",
+      "stat1": "Accédez à 7 ONG vérifiées actives dans 14 provinces de la RDC",
       "stat2": "Impact mesurable et transparent",
       "stat3": "Processus simple et rapide"
     },
@@ -163,7 +163,7 @@
     },
     "benefits": {
       "title": "Pourquoi devenir partenaire ?",
-      "b1": "Accès direct à 5 ONG locales vérifiées",
+      "b1": "Accès direct à 7 ONG locales vérifiées",
       "b2": "Publication ciblée d'appels à projets",
       "b3": "Rapports d'impact transparents et exportables",
       "b4": "Co-animation de forums thématiques provinciaux",

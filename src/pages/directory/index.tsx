@@ -151,8 +151,19 @@ function PhotoSlider({ images }: { images: string[] }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
+  const thumbRef = useRef<HTMLDivElement>(null);
 
-  const go = (next: number, dir: number) => { setDirection(dir); setCurrent(next); };
+  const go = (next: number, dir: number) => {
+    setDirection(dir);
+    setCurrent(next);
+    // keep active thumbnail in view
+    setTimeout(() => {
+      const container = thumbRef.current;
+      if (!container) return;
+      const thumb = container.children[next] as HTMLElement | undefined;
+      thumb?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }, 0);
+  };
   const prev = () => go((current - 1 + images.length) % images.length, -1);
   const next = () => go((current + 1) % images.length, 1);
 
@@ -163,67 +174,111 @@ function PhotoSlider({ images }: { images: string[] }) {
   };
 
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-gray-900 select-none" style={{ height: 420 }}>
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={current}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.4, ease: [0.32, 0, 0.67, 0] }}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          {imgErrors[current] ? (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gray-900">
-              <div className="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center">
-                <span className="text-gray-600 text-2xl">🖼</span>
+    <div className="space-y-2 select-none">
+      {/* ── Main frame ── */}
+      <div className="relative rounded-2xl overflow-hidden bg-gray-950" style={{ height: 420 }}>
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.38, ease: [0.32, 0, 0.67, 0] }}
+            className="absolute inset-0"
+          >
+            {imgErrors[current] ? (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gray-950">
+                <div className="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center">
+                  <span className="text-gray-600 text-2xl">🖼</span>
+                </div>
+                <span className="text-gray-500 text-sm">Photo {current + 1}</span>
               </div>
-              <span className="text-gray-500 text-sm">Photo {current + 1}</span>
-            </div>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={images[current]}
-              alt={`Photo ${current + 1}`}
-              className="w-full h-full object-contain"
-              onError={() => setImgErrors((p) => ({ ...p, [current]: true }))}
-            />
-          )}
-          {/* Subtle vignette at bottom for controls readability */}
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-        </motion.div>
-      </AnimatePresence>
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={images[current]}
+                alt={`Photo ${current + 1}`}
+                className="w-full h-full object-cover"
+                onError={() => setImgErrors((p) => ({ ...p, [current]: true }))}
+              />
+            )}
+            {/* Bottom gradient for readability */}
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
+            {/* Top gradient for counter readability */}
+            <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+          </motion.div>
+        </AnimatePresence>
 
-      {/* Arrows */}
-      <button onClick={prev} aria-label="Précédent"
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all hover:scale-105">
-        <ChevronLeft size={20} />
-      </button>
-      <button onClick={next} aria-label="Suivant"
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all hover:scale-105">
-        <ChevronRight size={20} />
-      </button>
+        {/* Arrows */}
+        <button onClick={prev} aria-label="Précédent"
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
+          <ChevronLeft size={20} />
+        </button>
+        <button onClick={next} aria-label="Suivant"
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
+          <ChevronRight size={20} />
+        </button>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
-        {images.map((_, i) => (
-          <button key={i} onClick={() => go(i, i > current ? 1 : -1)}
-            aria-label={`Photo ${i + 1}`}
-            className={`rounded-full transition-all duration-300 ${
-              i === current
-                ? "w-6 h-2 bg-white shadow"
-                : "w-2 h-2 bg-white/40 hover:bg-white/70"
-            }`}
-          />
-        ))}
+        {/* Counter badge */}
+        <div className="absolute top-3 left-3 z-10 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm tracking-wide">
+          {current + 1} / {images.length}
+        </div>
+
+        {/* Dot indicators (compact, max 10 visible) */}
+        {images.length <= 10 && (
+          <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
+            {images.map((_, i) => (
+              <button key={i} onClick={() => go(i, i > current ? 1 : -1)}
+                aria-label={`Photo ${i + 1}`}
+                className={`rounded-full transition-all duration-300 ${
+                  i === current
+                    ? "w-5 h-1.5 bg-white shadow"
+                    : "w-1.5 h-1.5 bg-white/45 hover:bg-white/75"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Counter badge */}
-      <div className="absolute top-3 right-3 z-10 bg-black/50 text-white text-xs font-medium px-2.5 py-1 rounded-full backdrop-blur-sm">
-        {current + 1} / {images.length}
-      </div>
+      {/* ── Thumbnail filmstrip (only when many images) ── */}
+      {images.length > 4 && (
+        <div
+          ref={thumbRef}
+          className="flex gap-2 overflow-x-auto pb-1"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {images.map((src, i) => (
+            <button
+              key={i}
+              onClick={() => go(i, i > current ? 1 : -1)}
+              aria-label={`Aller à la photo ${i + 1}`}
+              className={`flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ring-2 ${
+                i === current
+                  ? "ring-primary scale-105 shadow-md"
+                  : "ring-transparent opacity-60 hover:opacity-90 hover:ring-gray-300"
+              }`}
+              style={{ width: 64, height: 44 }}
+            >
+              {imgErrors[i] ? (
+                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-400 text-xs">{i + 1}</span>
+                </div>
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={src}
+                  alt={`Miniature ${i + 1}`}
+                  className="w-full h-full object-cover"
+                  onError={() => setImgErrors((p) => ({ ...p, [i]: true }))}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -341,9 +396,14 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
           {/* ── Body ── */}
           <div className="px-6 py-5 space-y-6">
 
-            {/* Photo slider */}
+            {/* Photo gallery */}
             {org.images && org.images.length > 0 && (
-              <PhotoSlider images={org.images} />
+              <div>
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                  Galerie photos · {org.images.length} images
+                </p>
+                <PhotoSlider images={org.images} />
+              </div>
             )}
 
             {/* Full name + location + founding */}
@@ -852,7 +912,7 @@ export default function DirectoryPage() {
               </div>
               <div className="flex flex-wrap gap-6 lg:flex-shrink-0">
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-white">5</p>
+                  <p className="text-2xl font-bold text-white">7</p>
                   <p className="text-white/70 text-xs mt-0.5">{t("stat_verified")}</p>
                 </div>
                 <div className="text-center">

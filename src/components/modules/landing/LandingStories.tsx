@@ -1,12 +1,9 @@
-import { useRef } from "react";
 import { useTranslation } from "next-i18next/pages";
-import { motion, useInView } from "framer-motion";
-import { Quote } from "lucide-react";
+import { motion } from "framer-motion";
+import { Quote, Star } from "lucide-react";
 
 export default function LandingStories() {
   const { t } = useTranslation("landing");
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   const stories = [
     {
@@ -39,10 +36,41 @@ export default function LandingStories() {
       metric: t("stories.metric3"),
       metricColor: "text-primary",
     },
+    {
+      badge: t("stories.badge4"),
+      badgeBg: "bg-accent-light",
+      badgeText: "text-accent",
+      borderColor: "border-accent",
+      quote: t("stories.quote4"),
+      org: t("stories.org4"),
+      metric: t("stories.metric4"),
+      metricColor: "text-accent",
+    },
+    {
+      badge: t("stories.badge5"),
+      badgeBg: "bg-primary-light",
+      badgeText: "text-primary",
+      borderColor: "border-primary",
+      quote: t("stories.quote5"),
+      org: t("stories.org5"),
+      metric: t("stories.metric5"),
+      metricColor: "text-primary",
+    },
+    {
+      badge: t("stories.badge6"),
+      badgeBg: "bg-amber-50",
+      badgeText: "text-amber-700",
+      borderColor: "border-amber-400",
+      quote: t("stories.quote6"),
+      org: t("stories.org6"),
+      metric: t("stories.metric6"),
+      metricColor: "text-amber-600",
+      featured: true,
+    },
   ];
 
   return (
-    <section ref={ref} id="succes" className="bg-white py-24">
+    <section id="succes" className="bg-white py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -53,15 +81,26 @@ export default function LandingStories() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-10">
           {stories.map((story, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className={`bg-white rounded-xl p-6 border-l-4 ${story.borderColor} shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4`}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: 0.05 * (i % 3) }}
+              className={`relative bg-white rounded-xl p-6 border-l-4 ${story.borderColor} ${
+                story.featured ? "ring-1 ring-amber-200 shadow-amber-100/60" : ""
+              } shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4`}
             >
+              {/* Featured "Impact ToGETHER" crown badge */}
+              {story.featured && (
+                <div className="absolute -top-3 right-4 flex items-center gap-1 bg-amber-400 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">
+                  <Star size={10} className="fill-white" />
+                  ToGETHER
+                </div>
+              )}
+
               <span
                 className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${story.badgeBg} ${story.badgeText} w-fit`}
               >

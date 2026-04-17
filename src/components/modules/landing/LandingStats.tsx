@@ -15,7 +15,7 @@ export default function LandingStats() {
   const inView = useInView(ref, { once: true });
 
   const stats = [
-    { value: "5", label: t("stats.ong") },
+    { value: "7", label: t("stats.ong") },
     { value: "12,780,000+", label: t("stats.people_helped") },
     { value: "132+", label: t("stats.projects_completed") },
     { value: "14", label: t("stats.provinces_covered") },

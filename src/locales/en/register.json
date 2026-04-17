@@ -37,7 +37,7 @@
       "badge": "NGO Registration",
       "title": "Register your organisation",
       "subtitle": "Join the local humanitarian network of DRC and access funding, coordination and visibility opportunities.",
-      "stat1": "5 NGO members · 14 provinces · 12,780,000+ people helped · Free access",
+      "stat1": "7 NGO members · 14 provinces · 12,780,000+ people helped · Free access",
       "stat2": "Verification within 48h",
       "stat3": "100% free"
     },
@@ -50,7 +50,7 @@
       "title": "Why join?",
       "b1": "Access to calls for projects and grants",
       "b2": "Visibility with international partners",
-      "b3": "Inter-provincial network of 5 verified NGOs",
+      "b3": "Inter-provincial network of 7 verified NGOs",
       "b4": "Advocacy tools and resource library",
       "b5": "Personalised impact tracking dashboard",
       "testimonial": "Thanks to this platform, we secured €150,000 in funding in just 3 months.",
@@ -151,8 +151,8 @@
     "header": {
       "badge": "Partner Registration",
       "title": "Become a strategic partner",
-      "subtitle": "Access a network of 5 verified local NGOs active in 14 provinces of DRC. Publish your calls for projects and track the impact of your funding.",
-      "stat1": "Access to 5 verified NGOs active in 14 provinces of DRC",
+      "subtitle": "Access a network of 7 verified local NGOs active in 14 provinces of DRC. Publish your calls for projects and track the impact of your funding.",
+      "stat1": "Access to 7 verified NGOs active in 14 provinces of DRC",
       "stat2": "Measurable and transparent impact",
       "stat3": "Simple and fast process"
     },
@@ -163,7 +163,7 @@
     },
     "benefits": {
       "title": "Why become a partner?",
-      "b1": "Direct access to 5 verified local NGOs",
+      "b1": "Direct access to 7 verified local NGOs",
       "b2": "Targeted publication of calls for projects",
       "b3": "Transparent and exportable impact reports",
       "b4": "Co-facilitation of provincial thematic forums",
