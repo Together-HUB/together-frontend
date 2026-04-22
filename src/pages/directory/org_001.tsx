@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/pages/serverSideTranslation
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Lightbox from "@/components/ui/Lightbox";
 import {
   CheckCircle,
   Calendar,
@@ -33,6 +34,9 @@ import Footer from "@/components/layout/Footer";
 import { organizations } from "@/services/mockData/organizations";
 
 const org = organizations.find((o) => o.id === "org_001")!;
+
+const BLUR_PLACEHOLDER =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 
 // ─── Simple image with fallback (explicit width/height) ───────────────────────
 
@@ -72,6 +76,8 @@ function ImgFallback({
       className={className}
       onError={() => setErrored(true)}
       priority={priority}
+      placeholder="blur"
+      blurDataURL={BLUR_PLACEHOLDER}
     />
   );
 }
@@ -81,7 +87,7 @@ function ImgFallback({
 function PhotoSlider({ images }: { images: string[] }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [imgError, setImgError] = useState<Record<number, boolean>>({});
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const go = (next: number, dir: number) => {
     setDirection(dir);
@@ -97,74 +103,82 @@ function PhotoSlider({ images }: { images: string[] }) {
   };
 
   return (
-    <div className="relative rounded-2xl overflow-hidden bg-gray-100 h-[420px] md:h-[520px] select-none">
-      {/* Slides */}
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={current}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.4, ease: [0.32, 0, 0.67, 0] }}
-          className="absolute inset-0"
-        >
-          {imgError[current] ? (
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="text-gray-400 text-sm">Photo ADSSE {current + 1}</span>
-            </div>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+    <>
+      <div className="relative rounded-2xl overflow-hidden bg-gray-100 h-[420px] md:h-[520px] select-none">
+        {/* Slides */}
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.4, ease: [0.32, 0, 0.67, 0] }}
+            className="absolute inset-0 cursor-zoom-in"
+            onClick={() => setLightboxOpen(true)}
+          >
+            <Image
               src={images[current]}
               alt={`Activités ADSSE ${current + 1}`}
-              className="w-full h-full object-cover"
-              onError={() => setImgError((prev) => ({ ...prev, [current]: true }))}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 66vw"
+              priority={current === 0}
+              placeholder="blur"
+              blurDataURL={BLUR_PLACEHOLDER}
             />
-          )}
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-        </motion.div>
-      </AnimatePresence>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+          </motion.div>
+        </AnimatePresence>
 
-      {/* Prev / Next buttons */}
-      <button
-        onClick={prev}
-        aria-label="Photo précédente"
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
-      >
-        <ChevronLeft size={22} />
-      </button>
-      <button
-        onClick={next}
-        aria-label="Photo suivante"
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
-      >
-        <ChevronRight size={22} />
-      </button>
+        {/* Prev / Next buttons */}
+        <button
+          onClick={(e) => { e.stopPropagation(); prev(); }}
+          aria-label="Photo précédente"
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
+        >
+          <ChevronLeft size={22} />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); next(); }}
+          aria-label="Photo suivante"
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg transition-all"
+        >
+          <ChevronRight size={22} />
+        </button>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => go(i, i > current ? 1 : -1)}
-            aria-label={`Photo ${i + 1}`}
-            className={`transition-all duration-200 rounded-full ${
-              i === current
-                ? "w-6 h-2.5 bg-white"
-                : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80"
-            }`}
-          />
-        ))}
+        {/* Dot indicators */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={(e) => { e.stopPropagation(); go(i, i > current ? 1 : -1); }}
+              aria-label={`Photo ${i + 1}`}
+              className={`transition-all duration-200 rounded-full ${
+                i === current
+                  ? "w-6 h-2.5 bg-white"
+                  : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Counter */}
+        <div className="absolute top-4 right-4 z-10 bg-black/40 text-white text-xs font-medium px-2.5 py-1 rounded-full pointer-events-none">
+          {current + 1} / {images.length}
+        </div>
       </div>
 
-      {/* Counter */}
-      <div className="absolute top-4 right-4 z-10 bg-black/40 text-white text-xs font-medium px-2.5 py-1 rounded-full">
-        {current + 1} / {images.length}
-      </div>
-    </div>
+      <Lightbox
+        images={images}
+        alts={images.map((_, i) => `Activités ADSSE ${i + 1}`)}
+        initialIndex={current}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+    </>
   );
 }
 
@@ -180,11 +194,14 @@ function MapImg({ src }: { src: string }) {
     );
   }
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={src}
       alt="Carte des zones d'intervention ADSSE"
-      className="w-full h-full object-cover"
+      fill
+      className="object-cover"
+      sizes="(max-width: 768px) 100vw, 60vw"
+      placeholder="blur"
+      blurDataURL={BLUR_PLACEHOLDER}
       onError={() => setErrored(true)}
     />
   );
@@ -193,6 +210,8 @@ function MapImg({ src }: { src: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ADSSEProfilePage() {
+  const [logoOpen, setLogoOpen] = useState(false);
+
   return (
     <>
       <Head>
@@ -233,8 +252,12 @@ export default function ADSSEProfilePage() {
                 <span className="text-white">ADSSE</span>
               </p>
 
-              {/* Logo */}
-              <div className="bg-white rounded-2xl p-4 shadow-lg inline-block mb-6">
+              {/* Logo — click to view fullscreen */}
+              <button
+                onClick={() => setLogoOpen(true)}
+                className="bg-white rounded-2xl p-4 shadow-lg inline-block mb-6 cursor-zoom-in focus:outline-none"
+                aria-label="Voir le logo ADSSE en plein écran"
+              >
                 <ImgFallback
                   src="/logos/adsse.png"
                   alt="ADSSE"
@@ -243,7 +266,14 @@ export default function ADSSEProfilePage() {
                   className="object-contain"
                   priority
                 />
-              </div>
+              </button>
+              <Lightbox
+                images={["/logos/adsse.png"]}
+                alts={["Logo ADSSE"]}
+                initialIndex={0}
+                isOpen={logoOpen}
+                onClose={() => setLogoOpen(false)}
+              />
 
               {/* Name */}
               <h1 className="text-2xl font-bold text-white leading-tight max-w-lg">
@@ -637,59 +667,75 @@ export default function ADSSEProfilePage() {
 function LogosSlider({ logos }: { logos: string[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [errors, setErrors] = useState<Record<number, boolean>>({});
+  const [activeLogo, setActiveLogo] = useState<number>(-1);
 
   const scroll = (dir: "left" | "right") => {
     scrollRef.current?.scrollBy({ left: dir === "right" ? 220 : -220, behavior: "smooth" });
   };
 
   return (
-    <div className="relative">
-      {/* Left arrow */}
-      <button
-        onClick={() => scroll("left")}
-        aria-label="Défiler vers la gauche"
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-2 shadow-md -translate-x-4 transition-all"
-      >
-        <ChevronLeft size={18} />
-      </button>
+    <>
+      <div className="relative">
+        {/* Left arrow */}
+        <button
+          onClick={() => scroll("left")}
+          aria-label="Défiler vers la gauche"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-2 shadow-md -translate-x-4 transition-all"
+        >
+          <ChevronLeft size={18} />
+        </button>
 
-      {/* Scrollable row */}
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide px-4 scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {logos.map((logo, i) => (
-          <div
-            key={i}
-            className="flex-shrink-0 bg-gray-50 rounded-xl p-4 flex items-center justify-center hover:bg-gray-100 transition-colors"
-            style={{ width: 160, height: 90 }}
-          >
-            {errors[i] ? (
-              <span className="text-xs text-gray-400">Partenaire {i + 1}</span>
-            ) : (
-              <Image
-                src={logo}
-                alt={`Partenaire ADSSE ${i + 1}`}
-                width={120}
-                height={60}
-                className="object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
-                onError={() => setErrors((prev) => ({ ...prev, [i]: true }))}
-              />
-            )}
-          </div>
-        ))}
+        {/* Scrollable row */}
+        <div
+          ref={scrollRef}
+          className="flex gap-4 overflow-x-auto scrollbar-hide px-4 scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {logos.map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 bg-gray-50 rounded-xl p-4 flex items-center justify-center hover:bg-gray-100 transition-colors cursor-zoom-in"
+              style={{ width: 160, height: 90 }}
+              onClick={() => !errors[i] && setActiveLogo(i)}
+              role="button"
+              aria-label={`Voir le logo partenaire ${i + 1} en plein écran`}
+            >
+              {errors[i] ? (
+                <span className="text-xs text-gray-400">Partenaire {i + 1}</span>
+              ) : (
+                <Image
+                  src={logo}
+                  alt={`Partenaire ADSSE ${i + 1}`}
+                  width={120}
+                  height={60}
+                  className="object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                  onError={() => setErrors((prev) => ({ ...prev, [i]: true }))}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Right arrow */}
+        <button
+          onClick={() => scroll("right")}
+          aria-label="Défiler vers la droite"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-2 shadow-md translate-x-4 transition-all"
+        >
+          <ChevronRight size={18} />
+        </button>
       </div>
 
-      {/* Right arrow */}
-      <button
-        onClick={() => scroll("right")}
-        aria-label="Défiler vers la droite"
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-2 shadow-md translate-x-4 transition-all"
-      >
-        <ChevronRight size={18} />
-      </button>
-    </div>
+      {activeLogo >= 0 && activeLogo < logos.length && (
+        <Lightbox
+          images={[logos[activeLogo]]}
+          alts={[`Partenaire ADSSE ${activeLogo + 1}`]}
+          initialIndex={0}
+          isOpen={activeLogo >= 0}
+          onClose={() => setActiveLogo(-1)}
+        />
+      )}
+    </>
   );
 }
 

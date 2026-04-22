@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/pages/serverSideTranslation
 import { useTranslation } from "next-i18next/pages";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import Lightbox from "@/components/ui/Lightbox";
 import {
   Search,
   CheckCircle,
@@ -43,6 +44,9 @@ const SECTORS = [
   "AME/Abri", "Sécurité Alimentaire", "Psychosocial", "Environnement", "Jeunesse",
 ];
 
+const BLUR_PLACEHOLDER =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+
 // ─── Logo with initials fallback ──────────────────────────────────────────────
 
 function OrgLogo({ src, name, width, height }: {
@@ -74,14 +78,30 @@ function OrgLogo({ src, name, width, height }: {
 
 function OrgCard({ org, onExpand }: { org: Organisation; onExpand: (org: Organisation) => void }) {
   const { t } = useTranslation("directory");
+  const [logoOpen, setLogoOpen] = useState(false);
   const visibleSectors = org.sectors.slice(0, 3);
   const extraCount = org.sectors.length - 3;
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6 hover:shadow-md hover:-translate-y-1 hover:border-primary/20 transition-all duration-200 h-full flex flex-col">
+      {/* Logo lightbox — portal-rendered, position in tree doesn't matter */}
+      <Lightbox
+        images={[org.logo_url]}
+        alts={[org.acronym]}
+        initialIndex={0}
+        isOpen={logoOpen}
+        onClose={() => setLogoOpen(false)}
+      />
+
       {/* Top row — Logo + Verified badge */}
       <div className="flex items-start justify-between">
-        <div className="flex items-center" style={{ width: 80, height: 60 }}>
+        <div
+          className="flex items-center cursor-zoom-in"
+          style={{ width: 80, height: 60 }}
+          onClick={(e) => { e.stopPropagation(); setLogoOpen(true); }}
+          role="button"
+          aria-label={`Voir le logo ${org.acronym} en plein écran`}
+        >
           <OrgLogo src={org.logo_url} name={org.acronym} width={80} height={60} />
         </div>
         {org.verified && (
@@ -150,13 +170,12 @@ function OrgCard({ org, onExpand }: { org: Organisation; onExpand: (org: Organis
 function PhotoSlider({ images }: { images: string[] }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [imgErrors, setImgErrors] = useState<Record<number, boolean>>({});
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const thumbRef = useRef<HTMLDivElement>(null);
 
   const go = (next: number, dir: number) => {
     setDirection(dir);
     setCurrent(next);
-    // keep active thumbnail in view
     setTimeout(() => {
       const container = thumbRef.current;
       if (!container) return;
@@ -174,112 +193,112 @@ function PhotoSlider({ images }: { images: string[] }) {
   };
 
   return (
-    <div className="space-y-2 select-none">
-      {/* ── Main frame ── */}
-      <div className="relative rounded-2xl overflow-hidden bg-gray-950" style={{ height: 420 }}>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={current}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.38, ease: [0.32, 0, 0.67, 0] }}
-            className="absolute inset-0"
-          >
-            {imgErrors[current] ? (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-gray-950">
-                <div className="w-14 h-14 rounded-full bg-gray-800 flex items-center justify-center">
-                  <span className="text-gray-600 text-2xl">🖼</span>
-                </div>
-                <span className="text-gray-500 text-sm">Photo {current + 1}</span>
-              </div>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+    <>
+      <div className="space-y-2 select-none">
+        {/* ── Main frame ── */}
+        <div className="relative rounded-2xl overflow-hidden bg-gray-950" style={{ height: 420 }}>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.38, ease: [0.32, 0, 0.67, 0] }}
+              className="absolute inset-0 cursor-zoom-in"
+              onClick={() => setLightboxOpen(true)}
+            >
+              <Image
                 src={images[current]}
                 alt={`Photo ${current + 1}`}
-                className="w-full h-full object-cover"
-                onError={() => setImgErrors((p) => ({ ...p, [current]: true }))}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 48rem"
+                placeholder="blur"
+                blurDataURL={BLUR_PLACEHOLDER}
               />
-            )}
-            {/* Bottom gradient for readability */}
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
-            {/* Top gradient for counter readability */}
-            <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
-          </motion.div>
-        </AnimatePresence>
+              {/* Bottom gradient for readability */}
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
+              {/* Top gradient for counter readability */}
+              <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+            </motion.div>
+          </AnimatePresence>
 
-        {/* Arrows */}
-        <button onClick={prev} aria-label="Précédent"
-          className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
-          <ChevronLeft size={20} />
-        </button>
-        <button onClick={next} aria-label="Suivant"
-          className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
-          <ChevronRight size={20} />
-        </button>
+          {/* Arrows */}
+          <button onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Précédent"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
+            <ChevronLeft size={20} />
+          </button>
+          <button onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Suivant"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/70 text-white rounded-full p-2.5 shadow-lg backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95">
+            <ChevronRight size={20} />
+          </button>
 
-        {/* Counter badge */}
-        <div className="absolute top-3 left-3 z-10 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm tracking-wide">
-          {current + 1} / {images.length}
+          {/* Counter badge */}
+          <div className="absolute top-3 left-3 z-10 bg-black/55 text-white text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm tracking-wide pointer-events-none">
+            {current + 1} / {images.length}
+          </div>
+
+          {/* Dot indicators (compact, max 10 visible) */}
+          {images.length <= 10 && (
+            <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
+              {images.map((_, i) => (
+                <button key={i} onClick={(e) => { e.stopPropagation(); go(i, i > current ? 1 : -1); }}
+                  aria-label={`Photo ${i + 1}`}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === current
+                      ? "w-5 h-1.5 bg-white shadow"
+                      : "w-1.5 h-1.5 bg-white/45 hover:bg-white/75"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Dot indicators (compact, max 10 visible) */}
-        {images.length <= 10 && (
-          <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5">
-            {images.map((_, i) => (
-              <button key={i} onClick={() => go(i, i > current ? 1 : -1)}
-                aria-label={`Photo ${i + 1}`}
-                className={`rounded-full transition-all duration-300 ${
+        {/* ── Thumbnail filmstrip (only when many images) ── */}
+        {images.length > 4 && (
+          <div
+            ref={thumbRef}
+            className="flex gap-2 overflow-x-auto pb-1"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {images.map((src, i) => (
+              <button
+                key={i}
+                onClick={() => go(i, i > current ? 1 : -1)}
+                aria-label={`Aller à la photo ${i + 1}`}
+                className={`relative flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ring-2 ${
                   i === current
-                    ? "w-5 h-1.5 bg-white shadow"
-                    : "w-1.5 h-1.5 bg-white/45 hover:bg-white/75"
+                    ? "ring-primary scale-105 shadow-md"
+                    : "ring-transparent opacity-60 hover:opacity-90 hover:ring-gray-300"
                 }`}
-              />
+                style={{ width: 64, height: 44 }}
+              >
+                <Image
+                  src={src}
+                  alt={`Miniature ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="64px"
+                  placeholder="blur"
+                  blurDataURL={BLUR_PLACEHOLDER}
+                />
+              </button>
             ))}
           </div>
         )}
       </div>
 
-      {/* ── Thumbnail filmstrip (only when many images) ── */}
-      {images.length > 4 && (
-        <div
-          ref={thumbRef}
-          className="flex gap-2 overflow-x-auto pb-1"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {images.map((src, i) => (
-            <button
-              key={i}
-              onClick={() => go(i, i > current ? 1 : -1)}
-              aria-label={`Aller à la photo ${i + 1}`}
-              className={`flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ring-2 ${
-                i === current
-                  ? "ring-primary scale-105 shadow-md"
-                  : "ring-transparent opacity-60 hover:opacity-90 hover:ring-gray-300"
-              }`}
-              style={{ width: 64, height: 44 }}
-            >
-              {imgErrors[i] ? (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400 text-xs">{i + 1}</span>
-                </div>
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={src}
-                  alt={`Miniature ${i + 1}`}
-                  className="w-full h-full object-cover"
-                  onError={() => setImgErrors((p) => ({ ...p, [i]: true }))}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      <Lightbox
+        images={images}
+        alts={images.map((_, i) => `Photo ${i + 1}`)}
+        initialIndex={current}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+    </>
   );
 }
 
@@ -288,40 +307,58 @@ function PhotoSlider({ images }: { images: string[] }) {
 function LogosSlider({ logos }: { logos: string[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [errors, setErrors] = useState<Record<number, boolean>>({});
+  const [activeLogo, setActiveLogo] = useState<number>(-1);
 
   const scroll = (dir: "left" | "right") =>
     scrollRef.current?.scrollBy({ left: dir === "right" ? 200 : -200, behavior: "smooth" });
 
   return (
-    <div className="relative">
-      <button onClick={() => scroll("left")} aria-label="Gauche"
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-1.5 shadow -translate-x-3 transition-all">
-        <ChevronLeft size={15} />
-      </button>
+    <>
+      <div className="relative">
+        <button onClick={() => scroll("left")} aria-label="Gauche"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-1.5 shadow -translate-x-3 transition-all">
+          <ChevronLeft size={15} />
+        </button>
 
-      <div ref={scrollRef} className="flex gap-3 overflow-x-auto px-2 scroll-smooth"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-        {logos.map((logo, i) => (
-          <div key={i}
-            className="flex-shrink-0 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors"
-            style={{ width: 110, height: 64 }}>
-            {errors[i] ? (
-              <span className="text-xs text-gray-400">Partenaire</span>
-            ) : (
-              <Image src={logo} alt={`Partenaire ${i + 1}`} width={90} height={50}
-                className="object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
-                onError={() => setErrors((p) => ({ ...p, [i]: true }))}
-              />
-            )}
-          </div>
-        ))}
+        <div ref={scrollRef} className="flex gap-3 overflow-x-auto px-2 scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {logos.map((logo, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-100 transition-colors cursor-zoom-in"
+              style={{ width: 110, height: 64 }}
+              onClick={() => !errors[i] && setActiveLogo(i)}
+              role="button"
+              aria-label={`Voir le logo partenaire ${i + 1} en plein écran`}
+            >
+              {errors[i] ? (
+                <span className="text-xs text-gray-400">Partenaire</span>
+              ) : (
+                <Image src={logo} alt={`Partenaire ${i + 1}`} width={90} height={50}
+                  className="object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                  onError={() => setErrors((p) => ({ ...p, [i]: true }))}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+
+        <button onClick={() => scroll("right")} aria-label="Droite"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-1.5 shadow translate-x-3 transition-all">
+          <ChevronRight size={15} />
+        </button>
       </div>
 
-      <button onClick={() => scroll("right")} aria-label="Droite"
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white border border-gray-200 hover:bg-gray-50 text-gray-600 rounded-full p-1.5 shadow translate-x-3 transition-all">
-        <ChevronRight size={15} />
-      </button>
-    </div>
+      {activeLogo >= 0 && activeLogo < logos.length && (
+        <Lightbox
+          images={[logos[activeLogo]]}
+          alts={[`Partenaire ${activeLogo + 1}`]}
+          initialIndex={0}
+          isOpen={activeLogo >= 0}
+          onClose={() => setActiveLogo(-1)}
+        />
+      )}
+    </>
   );
 }
 
@@ -332,11 +369,15 @@ function MapImage({ src, alt }: { src: string; alt: string }) {
   if (errored) return null;
   return (
     <div className="rounded-xl overflow-hidden border border-gray-100 bg-gray-50">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={800}
+        height={400}
         className="w-full object-contain max-h-64"
+        sizes="(max-width: 768px) 100vw, 48rem"
+        placeholder="blur"
+        blurDataURL={BLUR_PLACEHOLDER}
         onError={() => setErrored(true)}
       />
     </div>
@@ -347,8 +388,19 @@ function MapImage({ src, alt }: { src: string; alt: string }) {
 
 function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void }) {
   const { t } = useTranslation("directory");
+  const [headerLogoOpen, setHeaderLogoOpen] = useState(false);
 
   return (
+    <>
+      {/* Header logo lightbox */}
+      <Lightbox
+        images={[org.logo_url]}
+        alts={[org.acronym]}
+        initialIndex={0}
+        isOpen={headerLogoOpen}
+        onClose={() => setHeaderLogoOpen(false)}
+      />
+
     <AnimatePresence>
       {/* Backdrop */}
       <motion.div
@@ -373,7 +425,14 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
           {/* ── Sticky header ── */}
           <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
             <div className="flex items-center gap-3">
-              <OrgLogo src={org.logo_url} name={org.acronym} width={48} height={36} />
+              <div
+                className="cursor-zoom-in"
+                onClick={(e) => { e.stopPropagation(); setHeaderLogoOpen(true); }}
+                role="button"
+                aria-label={`Voir le logo ${org.acronym} en plein écran`}
+              >
+                <OrgLogo src={org.logo_url} name={org.acronym} width={48} height={36} />
+              </div>
               <div>
                 <p className="font-bold text-gray-900 text-sm leading-tight">{org.acronym}</p>
                 {org.verified && (
@@ -869,6 +928,7 @@ function ExpandedCard({ org, onClose }: { org: Organisation; onClose: () => void
         </motion.div>
       </motion.div>
     </AnimatePresence>
+    </>
   );
 }
 
