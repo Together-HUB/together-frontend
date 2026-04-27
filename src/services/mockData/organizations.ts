@@ -195,6 +195,7 @@ export const organizations: Organisation[] = [
     founded: 2007,
     province_primary: "Nord Kivu",
     city: "Goma",
+    website: "https://racojnk.org/",
     verified: true,
     status: "active",
     provinces_covered: ["Nord Kivu", "Sud Kivu", "Kasaï Central"],
@@ -240,6 +241,7 @@ export const organizations: Organisation[] = [
     province_primary: "Sud Kivu",
     city: "Bukavu",
     contact_email: "info@tpordc.org",
+    website: "https://www.tpordc.org/",
     verified: true,
     status: "active",
     provinces_covered: [
@@ -362,6 +364,7 @@ export const organizations: Organisation[] = [
     contact_email: "encorerdc24@gmail.com",
     contact_email_1: "encorerdc24@gmail.com",
     contact_email_2: "direction@encoredrc.org",
+    website: "https://encoredrc.org/",
     contact_phone: "+243 894 969 611",
     social: {
       facebook: "https://www.facebook.com/share/17Q8XPPNPC/",
