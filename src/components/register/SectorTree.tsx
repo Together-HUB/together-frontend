@@ -14,10 +14,18 @@ interface SectorNode {
 }
 
 const SECTOR_TREE: SectorNode[] = [
+  { id: "securite_alimentaire", label: "Sécurité Alimentaire", subs: [] },
+  { id: "sante", label: "Santé", subs: [] },
+  { id: "nutrition", label: "Nutrition", subs: [] },
   {
-    id: "securite_alimentaire",
-    label: "Sécurité Alimentaire",
-    subs: [{ id: "nutrition", label: "Nutrition" }],
+    id: "ame_abris",
+    label: "Abris/AME",
+    subs: [
+      { id: "cccm", label: "CCCM (Camp Coordination Camp Management)" },
+      { id: "teum", label: "TEUM (Transfert des Especes a Usage Multiple)" },
+      { id: "aha", label: "AHA (Action Humanitaire Anticipative)" },
+      { id: "ltp", label: "LTP (Logement, Terre et Propriété)" },
+    ],
   },
   {
     id: "protection",
@@ -27,19 +35,8 @@ const SECTOR_TREE: SectorNode[] = [
       { id: "enfant", label: "Enfant" },
     ],
   },
-  {
-    id: "ame_abris",
-    label: "AME / Abris",
-    subs: [
-      { id: "cccm", label: "CCCM (Camp Coordination Camp Management)" },
-      { id: "teum", label: "TEUM (Transfert des Especes a Usage Multiple)" },
-      { id: "aha", label: "AHA (Action Humanitaire Anticipative)" },
-      { id: "ltp", label: "LTP (Logement, Terre et Propriété)" },
-    ],
-  },
   { id: "wash", label: "WaSH", subs: [] },
   { id: "logistique", label: "Logistique", subs: [] },
-  { id: "sante", label: "Santé", subs: [] },
 ];
 
 function getLabelById(id: string): string {

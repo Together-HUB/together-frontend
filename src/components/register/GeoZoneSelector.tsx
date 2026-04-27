@@ -231,7 +231,17 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
     return groups;
   }, [selProvinces, selTerritoires, selZones]);
 
-  const totalSelected = selProvinces.size + selTerritoires.size + selZones.size;
+  const isAutresSelected = value.includes("autres");
+
+  const toggleAutres = () => {
+    if (isAutresSelected) {
+      onChange(value.filter((v) => v !== "autres"));
+    } else {
+      onChange([...value, "autres"]);
+    }
+  };
+
+  const totalSelected = selProvinces.size + selTerritoires.size + selZones.size + (isAutresSelected ? 1 : 0);
 
   return (
     <div>
@@ -401,6 +411,21 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
                 Aucun résultat trouvé
               </p>
             )}
+
+          {/* Autres */}
+          {(!isSearching || "autres".includes(q)) && (
+            <label className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg px-2 py-1.5 group mt-0.5">
+              <input
+                type="checkbox"
+                className="w-4 h-4 rounded accent-[#007FFF] cursor-pointer flex-shrink-0"
+                checked={isAutresSelected}
+                onChange={toggleAutres}
+              />
+              <span className="text-sm font-medium text-gray-800 group-hover:text-gray-900">
+                Autres
+              </span>
+            </label>
+          )}
         </div>
       </div>
 
@@ -474,6 +499,19 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
               ))}
             </div>
           ))}
+          {isAutresSelected && (
+            <span className="inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+              Autres
+              <button
+                type="button"
+                onClick={toggleAutres}
+                className="hover:opacity-70 transition-opacity ml-0.5"
+                aria-label="Retirer"
+              >
+                <X size={11} />
+              </button>
+            </span>
+          )}
         </div>
       )}
 
