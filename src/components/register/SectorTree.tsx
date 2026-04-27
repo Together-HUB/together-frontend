@@ -31,13 +31,13 @@ const SECTOR_TREE: SectorNode[] = [
     id: "ame_abris",
     label: "AME / Abris",
     subs: [
-      { id: "cccm", label: "CCCM (Coordination et Gestion des Sites)" },
-      { id: "teum", label: "TEUM (Tentes d'Urgence et Unités Mobiles)" },
-      { id: "aha", label: "AHA (Assistance Humanitaire en Abris)" },
+      { id: "cccm", label: "CCCM (Camp Coordination Camp Management)" },
+      { id: "teum", label: "TEUM (Transfert des Especes a Usage Multiple)" },
+      { id: "aha", label: "AHA (Action Humanitaire Anticipative)" },
       { id: "ltp", label: "LTP (Logement, Terre et Propriété)" },
     ],
   },
-  { id: "wash", label: "WASH", subs: [] },
+  { id: "wash", label: "WaSH", subs: [] },
   { id: "logistique", label: "Logistique", subs: [] },
   { id: "sante", label: "Santé", subs: [] },
 ];
@@ -50,6 +50,13 @@ function getLabelById(id: string): string {
     }
   }
   return id;
+}
+
+function getParentSector(subId: string): SectorNode | null {
+  for (const sector of SECTOR_TREE) {
+    if (sector.subs.some((s) => s.id === subId)) return sector;
+  }
+  return null;
 }
 
 interface SectorTreeProps {
@@ -70,11 +77,40 @@ export default function SectorTree({ value, onChange, error }: SectorTreeProps) 
     });
   };
 
-  const toggleSelect = (id: string) => {
+  const toggleLeaf = (id: string) => {
     if (value.includes(id)) {
       onChange(value.filter((v) => v !== id));
     } else {
       onChange([...value, id]);
+    }
+  };
+
+  const toggleSub = (subId: string, parentId: string) => {
+    const sector = SECTOR_TREE.find((s) => s.id === parentId);
+    if (value.includes(subId)) {
+      const next = value.filter((v) => v !== subId);
+      const otherSubsSelected = sector?.subs.some((s) => s.id !== subId && next.includes(s.id));
+      onChange(otherSubsSelected ? next : next.filter((v) => v !== parentId));
+    } else {
+      const next = [...value];
+      if (!next.includes(parentId)) next.unshift(parentId);
+      next.push(subId);
+      onChange(next);
+    }
+  };
+
+  const removeChip = (id: string) => {
+    const sector = SECTOR_TREE.find((s) => s.id === id);
+    if (sector && sector.subs.length > 0) {
+      const subIds = new Set(sector.subs.map((s) => s.id));
+      onChange(value.filter((v) => v !== id && !subIds.has(v)));
+    } else {
+      const parent = getParentSector(id);
+      if (parent) {
+        toggleSub(id, parent.id);
+      } else {
+        toggleLeaf(id);
+      }
     }
   };
 
@@ -84,52 +120,36 @@ export default function SectorTree({ value, onChange, error }: SectorTreeProps) 
         <div className="p-2 flex flex-col gap-1.5">
           {SECTOR_TREE.map((sector) => {
             const isExpanded = expanded.has(sector.id);
-            const isSelected = value.includes(sector.id);
+            const isParentSelected = value.includes(sector.id);
             const hasSubs = sector.subs.length > 0;
 
             return (
               <div key={sector.id}>
                 {hasSubs ? (
-                  <div
-                    className={`flex items-center rounded-lg border transition-all ${
-                      isSelected
+                  <button
+                    type="button"
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border text-left transition-all ${
+                      isParentSelected
                         ? "bg-primary/10 border-primary"
                         : "bg-white border-gray-200 hover:border-primary/40"
                     }`}
+                    onClick={() => toggleExpand(sector.id)}
                   >
-                    <label
-                      className="flex items-center gap-2 px-3 py-3 cursor-pointer"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <input
-                        type="checkbox"
-                        className="w-4 h-4 rounded accent-[#007FFF] cursor-pointer flex-shrink-0"
-                        checked={isSelected}
-                        onChange={() => toggleSelect(sector.id)}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      className="flex-1 flex items-center justify-between pr-4 py-3 text-left"
-                      onClick={() => toggleExpand(sector.id)}
-                    >
-                      <span className={`text-sm font-medium ${isSelected ? "text-primary" : "text-gray-900"}`}>
-                        {sector.label}
-                      </span>
-                      {isExpanded ? (
-                        <ChevronDown size={16} className="text-gray-400 flex-shrink-0 ml-2" />
-                      ) : (
-                        <ChevronRight size={16} className="text-gray-400 flex-shrink-0 ml-2" />
-                      )}
-                    </button>
-                  </div>
+                    <span className={`text-sm font-medium ${isParentSelected ? "text-primary" : "text-gray-900"}`}>
+                      {sector.label}
+                    </span>
+                    {isExpanded ? (
+                      <ChevronDown size={16} className="text-gray-400 flex-shrink-0 ml-2" />
+                    ) : (
+                      <ChevronRight size={16} className="text-gray-400 flex-shrink-0 ml-2" />
+                    )}
+                  </button>
                 ) : (
                   <button
                     type="button"
-                    onClick={() => toggleSelect(sector.id)}
+                    onClick={() => toggleLeaf(sector.id)}
                     className={`w-full flex items-center px-4 py-3 rounded-lg border text-left transition-all ${
-                      isSelected
+                      isParentSelected
                         ? "bg-primary/10 border-primary text-primary"
                         : "bg-white border-gray-200 text-gray-900 hover:border-primary/40"
                     }`}
@@ -158,7 +178,7 @@ export default function SectorTree({ value, onChange, error }: SectorTreeProps) 
                               type="checkbox"
                               className="w-4 h-4 rounded accent-[#007FFF] cursor-pointer flex-shrink-0"
                               checked={value.includes(sub.id)}
-                              onChange={() => toggleSelect(sub.id)}
+                              onChange={() => toggleSub(sub.id, sector.id)}
                             />
                             <span className="text-sm text-gray-700 group-hover:text-gray-900">
                               {sub.label}
@@ -185,7 +205,7 @@ export default function SectorTree({ value, onChange, error }: SectorTreeProps) 
               {getLabelById(id)}
               <button
                 type="button"
-                onClick={() => toggleSelect(id)}
+                onClick={() => removeChip(id)}
                 className="hover:opacity-70 transition-opacity ml-0.5"
                 aria-label="Retirer"
               >

@@ -272,15 +272,33 @@ function SuccessScreen() {
       </div>
 
       <p className="text-sm text-gray-500 mt-6">{t("ngo.success.contact_cta")}</p>
-      <a
-        href="https://wa.me/243813183123"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2 mt-3 px-6 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
-      >
-        <MessageCircle size={16} />
-        {t("ngo.success.whatsapp_btn")}
-      </a>
+      <div className="flex flex-col items-center gap-2 mt-3">
+        <a
+          href="https://wa.me/243813183123"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
+        >
+          <MessageCircle size={15} />
+          Mr. Michel Lulami
+        </a>
+        <a
+          href="https://wa.me/243815117685"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
+        >
+          <MessageCircle size={15} />
+          Mr. Xavier Mayele
+        </a>
+        <a
+          href="mailto:contact@drctogethernetwork.org"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary/10 text-primary rounded-xl font-semibold text-sm hover:bg-primary/20 transition-colors"
+        >
+          <Mail size={15} />
+          contact@drctogethernetwork.org
+        </a>
+      </div>
 
       <div className="mt-4">
         <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 transition-colors">

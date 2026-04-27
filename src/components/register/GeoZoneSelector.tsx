@@ -252,6 +252,10 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
 
         {/* Hierarchy */}
         <div className="max-h-48 overflow-y-auto p-2 flex flex-col gap-0.5">
+          {/* Province level descriptor */}
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 px-2 pt-1 pb-0.5 select-none">
+            Province
+          </p>
           {drcGeography.provinces.map((province) => {
             if (!showProvince(province)) return null;
             const isProvinceSelected = selProvinces.has(province.name);
@@ -296,6 +300,10 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
                       className="overflow-hidden"
                     >
                       <div className="pl-4 ml-4 border-l-2 border-primary/30">
+                        {/* Territoire level descriptor */}
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 px-2 pt-1 pb-0.5 select-none">
+                          Territoire
+                        </p>
                         {province.territoires.map((territoire) => {
                           if (!showTerritoire(province, territoire)) return null;
                           const isTerritoireSelected = selTerritoires.has(
@@ -344,6 +352,10 @@ export default function GeoZoneSelector({ value, onChange, error }: GeoZoneSelec
                                     className="overflow-hidden"
                                   >
                                     <div className="pl-4 ml-4 border-l-2 border-primary/20">
+                                      {/* Zone de santé level descriptor */}
+                                      <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 px-2 pt-1 pb-0.5 select-none">
+                                        Zone de santé
+                                      </p>
                                       {territoire.zones_de_sante.map((zone) => {
                                         if (!showZone(province, territoire, zone)) return null;
                                         const isZoneSelected = selZones.has(
