@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
@@ -24,6 +24,7 @@ import {
   Phone,
   Star,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -43,9 +44,6 @@ const SECTORS = [
   "Santé", "Éducation", "WASH", "Protection", "Urgence", "Nutrition",
   "AME/Abri", "Sécurité Alimentaire", "Psychosocial", "Environnement", "Jeunesse",
 ];
-
-const BLUR_PLACEHOLDER =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 
 // ─── Logo with initials fallback ──────────────────────────────────────────────
 
@@ -171,7 +169,12 @@ function PhotoSlider({ images }: { images: string[] }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const thumbRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [current]);
 
   const go = (next: number, dir: number) => {
     setDirection(dir);
@@ -197,6 +200,21 @@ function PhotoSlider({ images }: { images: string[] }) {
       <div className="space-y-2 select-none">
         {/* ── Main frame ── */}
         <div className="relative rounded-2xl overflow-hidden bg-gray-950" style={{ height: 420 }}>
+          {/* Dark loading overlay with spinner */}
+          <AnimatePresence>
+            {!imageLoaded && (
+              <motion.div
+                key="loader"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="absolute inset-0 z-10 flex items-center justify-center bg-gray-950"
+              >
+                <Loader2 size={36} className="text-white/40 animate-spin" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={current}
@@ -215,8 +233,7 @@ function PhotoSlider({ images }: { images: string[] }) {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 48rem"
-                placeholder="blur"
-                blurDataURL={BLUR_PLACEHOLDER}
+                onLoad={() => setImageLoaded(true)}
               />
               {/* Bottom gradient for readability */}
               <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
@@ -269,7 +286,7 @@ function PhotoSlider({ images }: { images: string[] }) {
                 key={i}
                 onClick={() => go(i, i > current ? 1 : -1)}
                 aria-label={`Aller à la photo ${i + 1}`}
-                className={`relative flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ring-2 ${
+                className={`relative flex-shrink-0 rounded-lg overflow-hidden bg-gray-800 transition-all duration-200 ring-2 ${
                   i === current
                     ? "ring-primary scale-105 shadow-md"
                     : "ring-transparent opacity-60 hover:opacity-90 hover:ring-gray-300"
@@ -282,8 +299,6 @@ function PhotoSlider({ images }: { images: string[] }) {
                   fill
                   className="object-cover"
                   sizes="64px"
-                  placeholder="blur"
-                  blurDataURL={BLUR_PLACEHOLDER}
                 />
               </button>
             ))}
@@ -366,9 +381,15 @@ function LogosSlider({ logos }: { logos: string[] }) {
 
 function MapImage({ src, alt }: { src: string; alt: string }) {
   const [errored, setErrored] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   if (errored) return null;
   return (
-    <div className="rounded-xl overflow-hidden border border-gray-100 bg-gray-50">
+    <div className="relative rounded-xl overflow-hidden border border-gray-800 bg-gray-900">
+      {!loaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900" style={{ minHeight: 160 }}>
+          <Loader2 size={28} className="text-white/40 animate-spin" />
+        </div>
+      )}
       <Image
         src={src}
         alt={alt}
@@ -376,8 +397,7 @@ function MapImage({ src, alt }: { src: string; alt: string }) {
         height={400}
         className="w-full object-contain max-h-64"
         sizes="(max-width: 768px) 100vw, 48rem"
-        placeholder="blur"
-        blurDataURL={BLUR_PLACEHOLDER}
+        onLoad={() => setLoaded(true)}
         onError={() => setErrored(true)}
       />
     </div>
@@ -963,7 +983,7 @@ export default function DirectoryPage() {
       <Navbar />
       <main className="min-h-screen bg-gray-50">
         {/* Page Header */}
-        <div className="bg-gradient-to-r from-[#006e8c] to-[#00536b] pt-24 pb-12">
+        <div className="bg-gradient-to-r from-[#007FFF] to-[#0066CC] pt-24 pb-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
               <div>

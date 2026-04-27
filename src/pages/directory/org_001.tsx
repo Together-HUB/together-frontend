@@ -586,7 +586,7 @@ export default function ADSSEProfilePage() {
       {/* ── SECTION 9 — CONTACT & CTA ─────────────────────────────────────── */}
       <section
         className="py-20 text-white"
-        style={{ background: "linear-gradient(135deg, #006e8c 0%, #1A1A1A 100%)" }}
+        style={{ background: "linear-gradient(135deg, #007FFF 0%, #1A1A1A 100%)" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">

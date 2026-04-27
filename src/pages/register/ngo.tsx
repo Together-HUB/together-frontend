@@ -15,23 +15,15 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FileUploadZone from "@/components/register/FileUploadZone";
-import ProvinceMultiSelect, { DRC_PROVINCES } from "@/components/register/ProvinceMultiSelect";
+import { DRC_PROVINCES } from "@/components/register/ProvinceMultiSelect";
+import SectorTree from "@/components/register/SectorTree";
+import GeoZoneSelector from "@/components/register/GeoZoneSelector";
 import TermsModal from "@/components/register/TermsModal";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const CURRENT_YEAR = new Date().getFullYear();
 const YEARS = Array.from({ length: CURRENT_YEAR - 1959 }, (_, i) => CURRENT_YEAR - i);
-
-const SECTORS = [
-  { key: "sante" },
-  { key: "education" },
-  { key: "wash" },
-  { key: "protection" },
-  { key: "agriculture" },
-  { key: "urgence" },
-  { key: "autre" },
-] as const;
 
 const TEAM_SIZES = ["team_lt10", "team_10_25", "team_26_50", "team_51_100", "team_gt100"] as const;
 
@@ -48,9 +40,8 @@ const schema = z.object({
   phone: z.string().min(8, "Veuillez entrer un numéro de téléphone valide"),
   website: z.string().optional(),
   // Step 2
-  sector: z.string().min(1, "Ce champ est obligatoire"),
-  sectorOther: z.string().optional(),
-  zones: z.array(z.string()).min(1, "Veuillez sélectionner au moins une option"),
+  sectors: z.array(z.string()).min(1, "Veuillez sélectionner au moins un secteur d'intervention."),
+  zones: z.array(z.string()).min(1, "Veuillez sélectionner au moins une zone géographique d'intervention."),
   teamSize: z.string().min(1, "Ce champ est obligatoire"),
   description: z.string().min(1, "Ce champ est obligatoire").max(300, "La description ne peut pas dépasser 300 caractères"),
   mission: z.string().min(1, "Ce champ est obligatoire"),
@@ -67,7 +58,7 @@ type FormData = z.infer<typeof schema>;
 
 const STEP_FIELDS: Record<number, (keyof FormData)[]> = {
   1: ["orgName", "legalNumber", "yearFounded", "province", "city", "orgEmail", "phone"],
-  2: ["sector", "zones", "teamSize", "description", "mission"],
+  2: ["sectors", "zones", "teamSize", "description", "mission"],
   3: ["contactName", "contactRole", "contactEmail", "contactPhone", "acceptTerms", "acceptData"],
 };
 
@@ -215,6 +206,15 @@ function BenefitsPanel() {
             {t("common.whatsapp_contact")}
           </a>
           <a
+            href="https://wa.me/243815117685"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-green-600 hover:text-green-700 mb-2"
+          >
+            <MessageCircle size={15} />
+            {t("common.whatsapp_contact_2")}
+          </a>
+          <a
             href="mailto:contact@drctogethernetwork.org"
             className="flex items-center gap-2 text-sm text-primary hover:text-primary-dark"
           >
@@ -307,6 +307,7 @@ export default function RegisterNGO() {
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
+      sectors: [],
       zones: [],
       acceptTerms: false,
       acceptData: false,
@@ -316,7 +317,7 @@ export default function RegisterNGO() {
   const { register, watch, setValue, formState: { errors }, trigger } = form;
 
   const zones = watch("zones") ?? [];
-  const sector = watch("sector");
+  const sectors = watch("sectors") ?? [];
   const description = watch("description") ?? "";
 
   const handleNext = async () => {
@@ -469,44 +470,18 @@ export default function RegisterNGO() {
                       <p className="text-sm text-gray-500 mb-8">{t("ngo.step2.subtitle")}</p>
 
                       <div className="flex flex-col gap-6">
-                        {/* Sector cards */}
-                        <InputField label={t("ngo.step2.sector_label")} required error={errors.sector?.message}>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
-                            {SECTORS.map((s) => {
-                              const active = sector === s.key;
-                              return (
-                                <button
-                                  key={s.key}
-                                  type="button"
-                                  onClick={() => setValue("sector", s.key, { shouldValidate: true })}
-                                  className={`flex items-start gap-3 p-4 rounded-xl border-2 text-left cursor-pointer transition-all ${
-                                    active ? "border-primary bg-primary-light" : "border-gray-200 hover:border-primary/40"
-                                  }`}
-                                >
-                                  <div>
-                                    <p className={`text-sm font-semibold ${active ? "text-primary" : "text-gray-800"}`}>
-                                      {t(`ngo.step2.sector_${s.key}`)}
-                                    </p>
-                                    <p className="text-xs text-gray-500 mt-0.5">
-                                      {t(`ngo.step2.sector_${s.key}_desc`)}
-                                    </p>
-                                  </div>
-                                </button>
-                              );
-                            })}
-                          </div>
-                          {sector === "autre" && (
-                            <input
-                              {...register("sectorOther")}
-                              placeholder={t("ngo.step2.sector_other_placeholder")}
-                              className={`${inputCls()} mt-3`}
-                            />
-                          )}
+                        {/* Sector tree */}
+                        <InputField label={t("ngo.step2.sectors_label")} required helper={t("ngo.step2.sectors_helper")} error={errors.sectors?.message}>
+                          <SectorTree
+                            value={sectors}
+                            onChange={(v) => setValue("sectors", v, { shouldValidate: true })}
+                            error={errors.sectors?.message}
+                          />
                         </InputField>
 
-                        {/* Province multi-select */}
+                        {/* Geographic zone selector */}
                         <InputField label={t("ngo.step2.zones_label")} required helper={t("ngo.step2.zones_helper")} error={errors.zones?.message}>
-                          <ProvinceMultiSelect
+                          <GeoZoneSelector
                             value={zones}
                             onChange={(v) => setValue("zones", v, { shouldValidate: true })}
                             error={errors.zones?.message}
@@ -603,7 +578,7 @@ export default function RegisterNGO() {
                               <input
                                 type="checkbox"
                                 {...register("acceptTerms")}
-                                className="w-4 h-4 mt-0.5 accent-[#006e8c] cursor-pointer flex-shrink-0"
+                                className="w-4 h-4 mt-0.5 accent-[#007FFF] cursor-pointer flex-shrink-0"
                               />
                               <span className="text-sm text-gray-700">
                                 {t("ngo.step3.terms")}{" "}
@@ -627,7 +602,7 @@ export default function RegisterNGO() {
                               <input
                                 type="checkbox"
                                 {...register("acceptData")}
-                                className="w-4 h-4 mt-0.5 accent-[#006e8c] cursor-pointer flex-shrink-0"
+                                className="w-4 h-4 mt-0.5 accent-[#007FFF] cursor-pointer flex-shrink-0"
                               />
                               <span className="text-sm text-gray-700">{t("ngo.step3.data_consent")}</span>
                             </label>

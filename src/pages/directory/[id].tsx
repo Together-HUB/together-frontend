@@ -545,7 +545,7 @@ export default function OrgProfilePage({ org }: Props) {
                 )}
 
                 {/* CTA — Faire partie du réseau */}
-                <div className="bg-gradient-to-br from-[#006e8c] to-[#00536b] rounded-xl p-5 text-white">
+                <div className="bg-gradient-to-br from-[#007FFF] to-[#0066CC] rounded-xl p-5 text-white">
                   <h3 className="font-semibold text-white mb-2">{t("join_network")}</h3>
                   <p className="text-sm font-medium text-white/90 mb-1">{t("join_prompt")}</p>
                   <p className="text-sm text-white/70 mb-4 leading-relaxed">

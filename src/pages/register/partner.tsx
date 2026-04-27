@@ -15,7 +15,8 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import FileUploadZone from "@/components/register/FileUploadZone";
-import ProvinceMultiSelect from "@/components/register/ProvinceMultiSelect";
+import SectorTree from "@/components/register/SectorTree";
+import GeoZoneSelector from "@/components/register/GeoZoneSelector";
 import TermsModal from "@/components/register/TermsModal";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -36,11 +37,6 @@ const PARTNERSHIP_TYPES = [
   { key: "recherche" },
   { key: "operationnel" },
   { key: "information" },
-] as const;
-
-const PARTNER_SECTORS = [
-  "sante", "education", "wash", "protection", "agriculture",
-  "urgence", "nutrition", "abris", "subsistance", "genre", "enfance",
 ] as const;
 
 const COUNTRIES = [
@@ -69,8 +65,8 @@ const schema = z.object({
   phone: z.string().optional(),
   // Step 2
   partnershipTypes: z.array(z.string()).min(1, "Veuillez sélectionner au moins une option"),
-  sectors: z.array(z.string()).min(1, "Veuillez sélectionner au moins une option"),
-  provinces: z.array(z.string()).min(1, "Veuillez sélectionner au moins une option"),
+  sectors: z.array(z.string()).min(1, "Veuillez sélectionner au moins un secteur d'intérêt."),
+  provinces: z.array(z.string()).min(1, "Veuillez sélectionner au moins une zone géographique d'intérêt."),
   fundingCapacity: z.string().optional(),
   description: z.string().min(1, "Ce champ est obligatoire").max(400, "La description ne peut pas dépasser 400 caractères"),
   // Step 3
@@ -227,6 +223,15 @@ function BenefitsPanel() {
           >
             <MessageCircle size={15} />
             {t("common.whatsapp_contact")}
+          </a>
+          <a
+            href="https://wa.me/243815117685"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-sm text-green-600 hover:text-green-700 mb-2"
+          >
+            <MessageCircle size={15} />
+            {t("common.whatsapp_contact_2")}
           </a>
           <a
             href="mailto:contact@drctogethernetwork.org"
@@ -535,40 +540,20 @@ export default function RegisterPartner() {
                           </div>
                         </InputField>
 
-                        {/* Sectors multi-select checkboxes */}
-                        <InputField label={t("partner.step2.sectors_label")} required error={errors.sectors?.message}>
-                          <div className={`border rounded-xl overflow-hidden ${errors.sectors?.message ? "border-accent" : "border-gray-200"}`}>
-                            <div className="max-h-48 overflow-y-auto p-3 grid grid-cols-2 gap-1">
-                              {PARTNER_SECTORS.map((s) => (
-                                <label key={s} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 rounded-lg px-2 py-1.5">
-                                  <input
-                                    type="checkbox"
-                                    className="w-4 h-4 accent-[#A60F30] cursor-pointer"
-                                    checked={sectors.includes(s)}
-                                    onChange={() => toggleArray("sectors", s)}
-                                  />
-                                  <span className="text-sm text-gray-700">{t(`partner.step2.sectors_${s}`)}</span>
-                                </label>
-                              ))}
-                            </div>
-                          </div>
-                          {sectors.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {sectors.map((s) => (
-                                <span key={s} className="inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-[#FAEAED] text-[#A60F30]">
-                                  {t(`partner.step2.sectors_${s}`)}
-                                </span>
-                              ))}
-                            </div>
-                          )}
+                        {/* Sectors tree */}
+                        <InputField label={t("partner.step2.sectors_label")} required helper={t("partner.step2.sectors_helper")} error={errors.sectors?.message}>
+                          <SectorTree
+                            value={sectors}
+                            onChange={(v) => setValue("sectors", v, { shouldValidate: true })}
+                            error={errors.sectors?.message}
+                          />
                         </InputField>
 
-                        {/* Province multi-select */}
+                        {/* Geographic zone selector */}
                         <InputField label={t("partner.step2.provinces_label")} required helper={t("partner.step2.provinces_helper")} error={errors.provinces?.message}>
-                          <ProvinceMultiSelect
+                          <GeoZoneSelector
                             value={provinces}
                             onChange={(v) => setValue("provinces", v, { shouldValidate: true })}
-                            accentColor="accent"
                             error={errors.provinces?.message}
                           />
                         </InputField>
